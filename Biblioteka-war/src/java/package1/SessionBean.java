@@ -5,8 +5,12 @@
 package package1;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.ejb.Stateless;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -15,45 +19,51 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean(name="SessionBean")
 @SessionScoped
 public class SessionBean {
-    private String username;
-    private String password;
-    private int count;
+    private User currentUser;
+    private List<User> users;
     
 
     public SessionBean() {
-        this.count = 0;
-        this.username = "";
-        this.password = "";
-
+        this.currentUser = new User();
+        this.users = new ArrayList<User>();
+        this.users.add(new User("Sebastian", "Koch", "seba.k@vp.pl", "seba", "seba"));
     }
 
-    public String getUsername() {
-        return username;
+    public User getCurrentUser() {
+        return currentUser;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
     }
-
-    public String getPassword() {
-        return password;
+    public String register(){
+        this.users.add(currentUser);
+       // this.currentUser.Reset();
+        return "index";
     }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String check(){
-        if(password.contentEquals("seba") && username.contentEquals("seba"))
-            return "logged";
-        else
+    public String check(){      
+        for(User us : users)
         {
-            return "index";
-        }
+            if(us.getLogin().contentEquals(currentUser.getLogin())&& us.getPassword().contentEquals(currentUser.getPassword()))
+            {
+                this.currentUser = us;
+                return "logged";
+            }          
+        }      
+        currentUser.Reset();
+        return "index";      
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
     public String logOut(){
-        this.username = "";
-        this.password = "";
+        this.currentUser.Reset();
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "index";
     }
 
