@@ -1,0 +1,80 @@
+/* 
+    Document   : main.css
+    Created on : 2013-03-24, 15:20:30
+    Author     : slimocb
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+body{
+    background : url('../img/background.jpg');
+    background-attachment:fixed;
+}
+
+.container{
+    background-color: rgba(255,255,255, 0.9);
+    padding: 10px 20px;
+    margin: -20px auto;
+}
+
+.news-content{
+    background-color: #f7f7f7;
+    padding: 20px;
+}
+
+.news-content .news{
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.news-content .news img{
+    width: 150px;
+    float: left;
+    margin: 0px 10px 10px 0px
+}
+
+.news-content .news .news-footer{
+    text-align: right;
+}
+
+.nav-tabs{
+    margin-right: -1px !important;
+}
+
+.tab-content{
+    background : #fff;
+    padding: 0 20px;
+    margin: 0;
+    border: 1px solid #ddd;
+}
+
+.footer{
+    text-align: right;
+    
+    margin-top: 10px;
+    padding: 2px;
+    font-size: 0.8em;
+    border-top : 1px solid #ddd;
+}
+
+.footer a{
+    
+}
+
+.comments{
+    margin: 10px 10px 0 10px;
+    padding: 10px ;
+    background: white;
+}
+
+.comments .comment{
+    
+}
+
+.comments .comment .media-object{
+    width: 64px;
+}
+
+
+.hide{
+    display: none;
+}
