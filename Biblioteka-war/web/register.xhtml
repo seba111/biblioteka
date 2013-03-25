@@ -5,23 +5,28 @@
     <h:head>
         <title>Facelet Title</title>
         <link href="css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+        <link href="css/main.css" rel="stylesheet" media="screen"/>
     </h:head>
     <h:body>
-        <p><h3>Rejestracja</h3></p>
-        <div class="well">
-            <h:form>
-              <p>Imię:</p>
-              <p><h:inputText value="#{SessionBean.currentUser.firstName}" /></p>
-              <p>Nazwisko:</p>
-              <p> <h:inputText value="#{SessionBean.currentUser.lastName}" /></p>
-              <p>E-mail:</p>
-              <p><h:inputText value="#{SessionBean.currentUser.email}" /></p>
-              <p>Login:</p>
-              <p> <h:inputText value="#{SessionBean.currentUser.login}" /></p>
-              <p>Hasło:</p>
-              <p> <h:inputSecret value="#{SessionBean.currentUser.password}" /></p>
-              <h:commandButton value="Rejestruj" class="btn btn-primary" action="#{SessionBean.register()}" />
-            </h:form>
+        <div class="container">
+            <p><h3>Rejestracja</h3></p>
+            <div class="well">
+                <h:form>
+                  <p>Imię:</p>
+                  <p><h:inputText value="#{SessionBean.currentUser.firstName}" /></p>
+                  <p>Nazwisko:</p>
+                  <p> <h:inputText value="#{SessionBean.currentUser.lastName}" /></p>
+                  <p>E-mail:</p>
+                  <p><h:inputText value="#{SessionBean.currentUser.email}" /></p>
+                  <p>Login:</p>
+                  <p> <h:inputText value="#{SessionBean.currentUser.login}" /></p>
+                  <p>Hasło:</p>
+                  <p> <h:inputSecret value="#{SessionBean.currentUser.password}" /></p>
+                  <h:commandButton value="Rejestruj" class="btn btn-primary" action="#{SessionBean.register()}" />
+                  <a></a>
+                  <h:commandButton value="Anuluj" class="btn btn-primary" action="main" />
+                </h:form>
+            </div>
         </div>
         <script src="http://code.jquery.com/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>

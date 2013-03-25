@@ -17,13 +17,37 @@
               <li><a href="#">O Bibliotece</a></li>
               <li><a href="#">Katalog</a></li>
             </ul>
-            <ul class="nav pull-right">
-                <li><a href="javascript:void(0)">Zaloguj</a></li>
-                <li><a href="javascript:void(0)">Zarejestruj</a></li>
-                <li><a href="javascript:void(0)">Wyloguj</a></li>
-            </ul>
+            <h:form>
+                <ul class="nav pull-right"> 
+                    <li><a data-toggle="modal" href="#myModal" >Zaloguj</a></li>
+                    <li><h:commandLink value="Zarejestruj" action="register" /></li>
+                </ul>
+            </h:form>
           </div>
-        </div>    
+        </div>  
+     
+        <div class="modal hide" id="myModal">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">x</button>
+            <h3>Logowanie</h3>
+          </div>
+          <div class="modal-body">
+            <h:form>
+              <p>Login:</p>
+              <p><h:inputText value="#{SessionBean.currentUser.login}" /></p>
+              <p>Hasło:</p>
+              <p> <h:inputSecret value="#{SessionBean.currentUser.password}" /></p>
+              <h:commandButton value="Zaloguj" class="btn btn-primary" action="#{SessionBean.check()}" />
+            </h:form>
+          </div>
+          <div class="modal-footer">
+            <h:form>
+                Nie posiadasz konta?
+                <h:commandButton class="btn btn-primary" value="Rejestracja" action="register" />
+            </h:form>
+          </div>
+        </div>
+     
     <div class="container">
          
         <div class="row-fluid">

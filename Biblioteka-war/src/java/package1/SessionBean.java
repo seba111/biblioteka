@@ -39,7 +39,7 @@ public class SessionBean {
     public String register(){
         this.users.add(currentUser);
        // this.currentUser.Reset();
-        return "index";
+        return "main";
     }
     public String check(){      
         for(User us : users)
@@ -51,7 +51,7 @@ public class SessionBean {
             }          
         }      
         currentUser.Reset();
-        return "index";      
+        return "main";      
     }
 
     public List<User> getUsers() {
@@ -64,7 +64,7 @@ public class SessionBean {
     public String logOut(){
         this.currentUser.Reset();
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "index";
+        return "main";
     }
 
 }
