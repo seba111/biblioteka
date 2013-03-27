@@ -10,43 +10,22 @@
     </h:head>
     <h:body>
     <div class="navbar">
+        <h:form>
           <div class="navbar-inner">
             <a class="brand" href="#">Biblioteka 1.0</a>
             <ul class="nav">
-              <li class="active"><a href="#">Aktualności</a></li>
+              <li class="active"><h:commandLink value="Aktualności" action="main" /></li>
               <li><a href="#">O Bibliotece</a></li>
               <li><a href="#">Katalog</a></li>
             </ul>
-            <h:form>
+            
                 <ul class="nav pull-right"> 
-                    <li><a href="javascript:void(0)">Mój profil</a></li>
+                    <li><h:commandLink value="Mój profil" action="profile" /></li>
                     <li><h:commandLink value="Wyloguj" action="#{SessionBean.logOut()}" /></li>
-                </ul>
-            </h:form>
+                </ul>          
           </div>
+          </h:form>
         </div>  
-     
-        <div class="modal hide" id="myModal">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">x</button>
-            <h3>Logowanie</h3>
-          </div>
-          <div class="modal-body">
-            <h:form>
-              <p>Login:</p>
-              <p><h:inputText value="#{SessionBean.currentUser.login}" /></p>
-              <p>Hasło:</p>
-              <p> <h:inputSecret value="#{SessionBean.currentUser.password}" /></p>
-              <h:commandButton value="Zaloguj" class="btn btn-primary" action="#{SessionBean.check()}" />
-            </h:form>
-          </div>
-          <div class="modal-footer">
-            <h:form>
-                Nie posiadasz konta?
-                <h:commandButton class="btn btn-primary" value="Rejestracja" action="register" />
-            </h:form>
-          </div>
-        </div>
      
     <div class="container">
          

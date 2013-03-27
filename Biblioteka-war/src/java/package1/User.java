@@ -9,11 +9,13 @@ package package1;
  * @author sebastian
  */
 public class User {
+    private int id;
     private String firstName;
     private String lastName;
     private String email;
     private String login;
     private String password;
+    private String group;
 
     public User() {
         this.firstName = "";
@@ -21,13 +23,33 @@ public class User {
         this.email = "";
         this.login = "";
         this.password = ""; 
+        this.group = "";
+        this.id = 0;
     }
-    public User(String fn, String ln, String em, String lg, String pw) {
+    public User(String fn, String ln, String em, String lg, String pw ) {
+        this.firstName = fn;
+        this.lastName = ln;
+        this.email = em;
+        this.login = lg;
+        this.password = pw;    
+    }
+    public User(String fn, String ln, String em, String lg, String pw, String gp) {
         this.firstName = fn;
         this.lastName = ln;
         this.email = em;
         this.login = lg;
         this.password = pw; 
+        this.group = gp;
+        this.id = 0;    
+    }
+    public User(int userId, String fn, String ln, String em, String lg, String pw, String gp) {
+        this.firstName = fn;
+        this.lastName = ln;
+        this.email = em;
+        this.login = lg;
+        this.password = pw; 
+        this.group = gp;
+        this.id = userId;    
     }
     public void Reset()
     {
@@ -36,6 +58,8 @@ public class User {
         this.email = "";
         this.login = "";
         this.password = ""; 
+        this.group = "";
+        this.id = 0;
     }
 
     public String getFirstName() {
@@ -60,6 +84,22 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
     }
 
     public String getLogin() {

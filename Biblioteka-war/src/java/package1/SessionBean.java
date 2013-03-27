@@ -5,6 +5,7 @@
 package package1;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -18,15 +19,12 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean(name="SessionBean")
 @SessionScoped
-public class SessionBean {
+public class SessionBean implements Serializable {
     private User currentUser;
-    private List<User> users;
     
 
     public SessionBean() {
         this.currentUser = new User();
-        this.users = new ArrayList<User>();
-        this.users.add(new User("Sebastian", "Koch", "seba.k@vp.pl", "seba", "seba"));
     }
 
     public User getCurrentUser() {
@@ -37,30 +35,23 @@ public class SessionBean {
         this.currentUser = currentUser;
     }
     public String register(){
-        this.users.add(currentUser);
-       // this.currentUser.Reset();
+        Database db = new Database();
+        db.AddUser(currentUser);
+        this.currentUser.Reset();
         return "main";
     }
-    public String check(){      
-        for(User us : users)
+    public String check(){
+        Database db = new Database();
+        User tmp = db.CheckLoginData(currentUser.getLogin(), currentUser.getPassword());
+        if(tmp != null)
         {
-            if(us.getLogin().contentEquals(currentUser.getLogin())&& us.getPassword().contentEquals(currentUser.getPassword()))
-            {
-                this.currentUser = us;
-                return "logged";
-            }          
-        }      
+            currentUser = tmp;
+            return "logged";
+        } 
         currentUser.Reset();
         return "main";      
     }
 
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
     public String logOut(){
         this.currentUser.Reset();
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();

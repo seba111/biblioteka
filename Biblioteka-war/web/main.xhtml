@@ -10,20 +10,21 @@
     </h:head>
     <h:body>
     <div class="navbar">
+        <h:form>
           <div class="navbar-inner">
             <a class="brand" href="#">Biblioteka 1.0</a>
             <ul class="nav">
-              <li class="active"><a href="#">Aktualności</a></li>
+              <li class="active"><h:commandLink value="Aktualności" action="main" /></li>
               <li><a href="#">O Bibliotece</a></li>
               <li><a href="#">Katalog</a></li>
             </ul>
-            <h:form>
+            
                 <ul class="nav pull-right"> 
                     <li><a data-toggle="modal" href="#myModal" >Zaloguj</a></li>
                     <li><h:commandLink value="Zarejestruj" action="register" /></li>
                 </ul>
-            </h:form>
-          </div>
+            </div>
+          </h:form>
         </div>  
      
         <div class="modal hide" id="myModal">
