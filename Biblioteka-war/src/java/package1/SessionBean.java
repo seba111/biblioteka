@@ -21,10 +21,20 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class SessionBean implements Serializable {
     private User currentUser;
+    private boolean logged;
     
 
     public SessionBean() {
         this.currentUser = new User();
+        this.logged = false;
+    }
+
+    public boolean isLogged() {
+        return logged;
+    }
+
+    public void setLogged(boolean logged) {
+        this.logged = logged;
     }
 
     public User getCurrentUser() {
@@ -45,15 +55,17 @@ public class SessionBean implements Serializable {
         User tmp = db.CheckLoginData(currentUser.getLogin(), currentUser.getPassword());
         if(tmp != null)
         {
-            currentUser = tmp;
-            return "logged";
+            this.currentUser = tmp;
+            this.logged = true;
+            return "main";
         } 
-        currentUser.Reset();
+        this.currentUser.Reset();
         return "main";      
     }
 
     public String logOut(){
         this.currentUser.Reset();
+        this.logged = false;
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "main";
     }
