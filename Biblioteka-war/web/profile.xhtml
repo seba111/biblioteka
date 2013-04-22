@@ -34,9 +34,12 @@
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab1" data-toggle="tab">Mój Profil</a></li>
           <li><a href="#tab2" data-toggle="tab">Zarezerwowane książki </a></li>
+          <li><a href="#tab3" data-toggle="tab">Dodaj news</a></li>
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab1">
+            <p><b>Data utworzenia:</b></p>
+            <p><h:outputText value="#{SessionBean.currentUser.created_at}" /></p>
             <p><b>Imię:</b></p>
             <p><h:outputText value="#{SessionBean.currentUser.firstName}" /></p>
             <p><b>Nazwisko:</b></p>
@@ -50,6 +53,17 @@
           </div>
           <div class="tab-pane" id="tab2">
             <p>Coś tu kiedyś będzie.</p>
+          </div>
+          <div class="tab-pane" id="tab3">
+            <h:form>
+                <p>Podaj kategorie newsa:</p>
+                <h:inputText value="#{SessionBean.newNews.category}"/>
+                <p>Podaj tytuł:</p>
+                <h:inputText value="#{SessionBean.newNews.title}"/>
+                <p>Podaj treść:</p>
+                <h:inputTextarea value="#{SessionBean.newNews.content}"/>
+                <h:commandLink value="Zapisz" action="#{SessionBean.addNewNews()}"/>
+            </h:form>
           </div>
         </div>
     </div>

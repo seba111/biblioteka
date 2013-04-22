@@ -9,13 +9,14 @@ package package1;
  * @author sebastian
  */
 public class User {
-    private int id;
+    private Integer id;
+    private String email;
     private String firstName;
     private String lastName;
-    private String email;
+    private String created_at;
     private String login;
     private String password;
-    private String group;
+    private Integer status;
 
     public User() {
         this.firstName = "";
@@ -23,7 +24,7 @@ public class User {
         this.email = "";
         this.login = "";
         this.password = ""; 
-        this.group = "";
+        this.status = 0;
         this.id = 0;
     }
     public User(String fn, String ln, String em, String lg, String pw ) {
@@ -33,23 +34,26 @@ public class User {
         this.login = lg;
         this.password = pw;    
     }
-    public User(String fn, String ln, String em, String lg, String pw, String gp) {
+    public User(String fn, String ln, String em, String at, String lg, String pw, String gp) {
         this.firstName = fn;
         this.lastName = ln;
         this.email = em;
+        this.created_at = at;
         this.login = lg;
         this.password = pw; 
-        this.group = gp;
+        this.status = 0;
         this.id = 0;    
     }
-    public User(int userId, String fn, String ln, String em, String lg, String pw, String gp) {
-        this.firstName = fn;
-        this.lastName = ln;
-        this.email = em;
-        this.login = lg;
-        this.password = pw; 
-        this.group = gp;
-        this.id = userId;    
+    public User(Integer id, String email,String first_name, String last_name, String created_at, String login, String password, Integer status) {
+        this.id = id;
+        this.email = email;
+        this.firstName = first_name;
+        this.lastName = last_name;
+        this.created_at = created_at;
+        this.login = login;
+        this.password = password; 
+        this.status = status;
+           
     }
     public void Reset()
     {
@@ -57,9 +61,18 @@ public class User {
         this.lastName = "";
         this.email = "";
         this.login = "";
-        this.password = ""; 
-        this.group = "";
+        this.password = "";
+        this.created_at ="";
+        this.status = 0;
         this.id = 0;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
     public String getFirstName() {
@@ -90,16 +103,16 @@ public class User {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getGroup() {
-        return group;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public String getLogin() {

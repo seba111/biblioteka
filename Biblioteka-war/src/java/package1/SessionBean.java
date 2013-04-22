@@ -7,6 +7,7 @@ package package1;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.faces.bean.ManagedBean;
@@ -21,11 +22,26 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class SessionBean implements Serializable {
     private User currentUser;
+    private News newNews;
+
+    public News getNewNews() {
+        return newNews;
+    }
+
+    public void setNewNews(News newNews) {
+        this.newNews = newNews;
+    }
     private boolean logged;
     
-
+    public String addNewNews(){
+        Database db = new Database();
+        db.AddNews(currentUser, newNews);
+        newNews.Clear();
+        return "main";
+    }
     public SessionBean() {
         this.currentUser = new User();
+        this.newNews = new News();
         this.logged = false;
     }
 
