@@ -19,18 +19,24 @@ import javax.faces.bean.SessionScoped;
  * @author sebastian
  */
 @ManagedBean(name = "ReadDataBean")
-@SessionScoped
+@ApplicationScoped
 public class ReadDataBean implements Serializable {
 
-    private ArrayList<News> newses = new ArrayList<News>();
-    public ReadDataBean(){}
+    private ArrayList<News> newses;
+    private Database db;
+    public ReadDataBean(){
+        this.newses = new ArrayList<News>();
+        this.db = new Database();
+    }
     public String test(){
       
         return "register";
     }
 
     public ArrayList<News> getNewses() {
-        return newses;
+        
+        this.newses= db.GetNewses();
+        return this.newses;
     }
 
     public void setNewses(ArrayList<News> newses) {

@@ -96,4 +96,8 @@ public class News {
         this.user_id = user_id;
         this.category = category;
     }
+    @Override
+    public String toString(){
+        return this.title + " " +this.content;
+    }
 }

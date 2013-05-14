@@ -61,8 +61,8 @@
                 <p>Podaj tytuł:</p>
                 <h:inputText value="#{SessionBean.newNews.title}"/>
                 <p>Podaj treść:</p>
-                <h:inputTextarea value="#{SessionBean.newNews.content}"/>
-                <h:commandLink value="Zapisz" action="#{SessionBean.addNewNews()}"/>
+                <h:inputTextarea value="#{SessionBean.newNews.content}"/><br/>
+                <h:commandButton value="Zapisz" class="btn btn-primary" action="#{SessionBean.addNewNews()}"/>
             </h:form>
           </div>
         </div>

@@ -23,6 +23,7 @@ import javax.faces.context.FacesContext;
 public class SessionBean implements Serializable {
     private User currentUser;
     private News newNews;
+    private ArrayList<News> newses = new ArrayList<News>();
 
     public News getNewNews() {
         return newNews;
@@ -36,7 +37,14 @@ public class SessionBean implements Serializable {
     public String addNewNews(){
         Database db = new Database();
         db.AddNews(currentUser, newNews);
+        System.out.println("Nowy news: "+ newNews);
         newNews.Clear();
+              
+        newses = db.GetNewses();
+        
+        for(News nn: newses){
+            System.out.println(nn);
+        }
         return "main";
     }
     public SessionBean() {
