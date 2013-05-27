@@ -40,7 +40,7 @@ public class SessionBean implements Serializable {
         System.out.println("Nowy news: "+ newNews);
         newNews.Clear();
               
-        newses = db.GetNewses();
+        newses = db.GetNewses("NEWS");
         
         for(News nn: newses){
             System.out.println(nn);

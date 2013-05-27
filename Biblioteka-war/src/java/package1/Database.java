@@ -135,27 +135,59 @@ public class Database {
             System.err.println(e.getMessage());
 	}       
     }
-    public ArrayList<News> GetNewses()
+    public ArrayList<News> GetNewses(String type)
     {
         ArrayList<News> lista= new ArrayList<News>();
+        
         try
 	{
             stmt = conn.createStatement();
-            PreparedStatement pst = conn.prepareStatement("select * from News");
+            PreparedStatement pst = conn.prepareStatement("select * from News WHERE CATEGORY LIKE '" + type  +"'");
             ResultSet rs = pst.executeQuery();
+            
             while(rs.next())
-            {
+            {   
+                
                 lista.add(new News(rs.getInt(1), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)));
             }
             rs.close();
             pst.close();
             stmt.close();
+            
 	}
 	catch(SQLException e)
 	{
             System.err.println(e.getMessage());
+            
 	}
         return lista;
+    }
+    
+    
+    public News getNews(String id){
+        News object = null;
+        try
+	{
+            stmt = conn.createStatement();
+            PreparedStatement pst = conn.prepareStatement("select * from News WHERE ID = " + id  +"");
+            ResultSet rs = pst.executeQuery();
+            
+            if(rs.next())
+            {   
+                
+                object = new News(rs.getInt(1), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+            }
+            rs.close();
+            pst.close();
+            stmt.close();
+            
+	}
+	catch(SQLException e)
+	{
+            System.err.println(e.getMessage());
+            
+	}
+        return object;
     }
     public void Close()
     {

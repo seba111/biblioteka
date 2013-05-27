@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>System Zarządzania biblioteką - Kiebdaj i Koch</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+        <link href="css/main.css" rel="stylesheet" media="screen"/>
+    </h:head>
+    <h:body>
+    <div class="navbar">
+        <h:form>
+          <div class="navbar-inner">
+            <a class="brand" href="#">Biblioteka 1.0</a>
+            <ul class="nav">
+              <li class="active"><h:commandLink value="Aktualności" action="glowna" /></li>
+              <li><a href="#">O Bibliotece</a></li>
+              <li><a href="#">Katalog</a></li>
+            </ul>
+            
+                <ul class="nav pull-right"> 
+                    <c:if test="#{!SessionBean.logged}">
+                        <li><a data-toggle="modal" href="#myModal" >Zaloguj</a></li>
+                    </c:if>
+                    <li><h:commandLink value="Zarejestruj" action="register" rendered="#{!SessionBean.logged}"/></li>
+                    <li><h:commandLink value="Mój profil" action="profile" rendered="#{SessionBean.logged}"/></li>
+                    <li><h:commandLink value="Wyloguj" action="#{SessionBean.logOut()}" rendered="#{SessionBean.logged}"/></li>
+                </ul>
+            </div>
+          </h:form>
+        </div>  
+     
+        <div class="modal hide" id="myModal">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">x</button>
+            <h3>Logowanie</h3>
+          </div>
+          <div class="modal-body">
+            <h:form>
+              <p>Login:</p>
+              <p><h:inputText value="#{SessionBean.currentUser.login}" /></p>
+              <p>Hasło:</p>
+              <p> <h:inputSecret value="#{SessionBean.currentUser.password}" /></p>
+              <h:commandButton value="Zaloguj" class="btn btn-primary" action="#{SessionBean.check()}" />
+            </h:form>
+          </div>
+          <div class="modal-footer">
+            <h:form>
+                Nie posiadasz konta?
+                <h:commandButton class="btn btn-primary" value="Rejestracja" action="register" />
+            </h:form>
+          </div>
+        </div>
+     
+    <div class="container">
+         
+        <div class="row-fluid">
+            <ui:insert name="content"/>
+        </div>
+        <div class="row-fluid">
+            <div class="footer">
+                
+                Aplikacja stworzona w ramacha zaliczenia z projektu "Programowanie aplikacji wielowarstwowych" oraz "Tworzenie aplikacji WEB 2.0"
+                
+                (c)     
+                <a href="javascript:void(0)">Kiebdaj</a> i
+                <a href="javascirpt:void(0)">Koch</a>
+            </div>
+        </div>
+    </div>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>  
+    <script src="js/document.js"></script>  
+    </h:body>
+</html>
+
