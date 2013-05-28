@@ -83,7 +83,7 @@ public class SessionBean implements Serializable {
             String absoluteDiskPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath(relativeWebPath);//externalContext.getRealPath(relativeWebPath);
             
          //   File dir = new File("./images/");
-            File file = new File(absoluteDiskPath+"/"+uploadedFile.getName());
+            File file = new File(absoluteDiskPath+"/../../../web/img/"+uploadedFile.getName());
         //    if(!dir.exists())
         //    {                 
         //        dir.mkdirs();
