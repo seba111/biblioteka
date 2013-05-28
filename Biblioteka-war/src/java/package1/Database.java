@@ -76,7 +76,7 @@ public class Database {
             ResultSet rs = pst.executeQuery();
             if(rs.next())
             {
-                usr = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7),rs.getInt(9));
+                usr = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7),rs.getString(8),rs.getInt(9));
                 rs.close();
                 pst.close();
                 stmt.close();
@@ -98,14 +98,15 @@ public class Database {
 	{
 
             stmt = conn.createStatement();
-            PreparedStatement pst = conn.prepareStatement("insert into user(email,first_name,last_name,created_at,login,password,status) values(?,?,?,strftime('%Y-%m-%d %H:%M:%S','now'),?,?,?)");
+            PreparedStatement pst = conn.prepareStatement("insert into user(email,first_name,last_name,created_at,login,password,avatar,status) values(?,?,?,strftime('%Y-%m-%d %H:%M:%S','now'),?,?,?,?)");
             pst.setString(1, usr.getEmail());
             pst.setString(2, usr.getFirstName());
             pst.setString(3, usr.getLastName());
             
             pst.setString(4, usr.getLogin());
             pst.setString(5, usr.getPassword());
-            pst.setInt(6, 1);
+            pst.setString(6, usr.getAvatar());
+            pst.setInt(7, 1);
             pst.executeUpdate();
             pst.close(); 
             stmt.close(); 
