@@ -30,6 +30,7 @@ public class SessionBean implements Serializable {
     private News newNews;
     private ArrayList<News> newses = new ArrayList<News>();
     private UploadedFile uploadedFile;
+    private Database db;
 
     public News getNewNews() {
         return newNews;
@@ -41,12 +42,46 @@ public class SessionBean implements Serializable {
     private boolean logged;
     
     public String addNewNews(){
-        Database db = new Database();
-        db.AddNews(currentUser, newNews);
+        InputStream inputStr = null;
+        if(uploadedFile != null)
+        {
+            try {
+                inputStr = uploadedFile.getInputStream();       
+
+                String relativeWebPath = "/img/";
+                String absoluteDiskPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath(relativeWebPath);//externalContext.getRealPath(relativeWebPath);
+
+             //   File dir = new File("./images/");
+                File file = new File(absoluteDiskPath+"/../../../web/img/"+uploadedFile.getName());
+            //    if(!dir.exists())
+            //    {                 
+            //        dir.mkdirs();
+             //   }
+                if(!file.exists())
+                {
+                    System.out.println("nie istnieje");
+                    file.createNewFile();
+                }
+                else
+                {
+                    System.out.println("juz istnieje");
+                }
+
+                FileUtils.copyInputStreamToFile(inputStr, file);
+
+            } 
+            catch (IOException e) {
+                e.printStackTrace();
+            }       
+
+            this.newNews.setImage(uploadedFile.getName());
+            uploadedFile = null;
+        }
+        this.db.AddNews(currentUser, newNews);
         System.out.println("Nowy news: "+ newNews);
-        newNews.Clear();
+        this.newNews.Clear();
               
-        newses = db.GetNewses("NEWS");
+        this.newses = this.db.GetNewses("NEWS");
         
         for(News nn: newses){
             System.out.println(nn);
@@ -57,6 +92,7 @@ public class SessionBean implements Serializable {
         this.currentUser = new User();
         this.newNews = new News();
         this.logged = false;
+        this.db = new Database();
     }
 
     public boolean isLogged() {
@@ -76,47 +112,48 @@ public class SessionBean implements Serializable {
     }
     public String register(){
         InputStream inputStr = null;
-        try {
-            inputStr = uploadedFile.getInputStream();       
-            
-            String relativeWebPath = "/img/";
-            String absoluteDiskPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath(relativeWebPath);//externalContext.getRealPath(relativeWebPath);
-            
-         //   File dir = new File("./images/");
-            File file = new File(absoluteDiskPath+"/../../../web/img/"+uploadedFile.getName());
-        //    if(!dir.exists())
-        //    {                 
-        //        dir.mkdirs();
-         //   }
-            if(!file.exists())
-            {
-                System.out.println("nie istnieje");
-                file.createNewFile();
-            }
-            else
-            {
-                System.out.println("juz istnieje");
-            }
-            
-            FileUtils.copyInputStreamToFile(inputStr, file);
-            
-        } 
-        catch (IOException e) {
-            e.printStackTrace();
+        if(this.uploadedFile != null)
+        {
+            try {
+                inputStr = this.uploadedFile.getInputStream();       
+
+                String relativeWebPath = "/img/";
+                String absoluteDiskPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath(relativeWebPath);//externalContext.getRealPath(relativeWebPath);
+
+             //   File dir = new File("./images/");
+                File file = new File(absoluteDiskPath+"/../../../web/img/"+uploadedFile.getName());
+            //    if(!dir.exists())
+            //    {                 
+            //        dir.mkdirs();
+             //   }
+                if(!file.exists())
+                {
+                    System.out.println("nie istnieje");
+                    file.createNewFile();
+                }
+                else
+                {
+                    System.out.println("juz istnieje");
+                }
+
+                FileUtils.copyInputStreamToFile(inputStr, file);
+
+            } 
+            catch (IOException e) {
+                e.printStackTrace();
+            }       
+
+            this.currentUser.setAvatar(uploadedFile.getName());
+            this.uploadedFile = null;
         }
         
-        
-        this.currentUser.setAvatar(uploadedFile.getName());
-        
-        
-        Database db = new Database();
-        db.AddUser(currentUser);
+
+        this.db.AddUser(currentUser);
         this.currentUser.Reset();
         return "main";
     }
     public String check(){
-        Database db = new Database();
-        User tmp = db.CheckLoginData(currentUser.getLogin(), currentUser.getPassword());
+        User tmp = this.db.CheckLoginData(currentUser.getLogin(), currentUser.getPassword());
         if(tmp != null)
         {
             this.currentUser = tmp;

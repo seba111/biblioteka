@@ -45,7 +45,7 @@ public class Database {
             stmt = conn.createStatement();
            // stmt.executeUpdate("drop table user");
             // tabela user jeszcze stara wersja !
-            stmt.executeUpdate("create table if not exists user(id integer primary key autoincrement, email varchar(100), first_name varchar(50), last_name varchar(50), created_at TEXT, login varchar(32), password varchar(32), avatar varchar(36), status integer)");
+            stmt.executeUpdate("create table if not exists User(id integer primary key autoincrement, email varchar(100), first_name varchar(50), last_name varchar(50), created_at TEXT, login varchar(32), password varchar(32), avatar varchar(36), status integer)");
             stmt.executeUpdate("create table if not exists News(id integer primary key autoincrement, image varchar(36), title varchar(255), content TEXT, created_at TEXT, user_id integer, category varchar(100), FOREIGN KEY(user_id) REFERENCES User(id))");
             stmt.executeUpdate("create table if not exists News_Comment(id integer primary key autoincrement, news_id integer, user_id integer, created_at TEXT, content TEXT, FOREIGN KEY(news_id) REFERENCES News(id), FOREIGN KEY(user_id) REFERENCES User(id))");
             stmt.executeUpdate("create table if not exists Book(id integer primary key autoincrement, image varchar(36), title varchar(255), desctiption TEXT, yesr TEXT autor varchar(255))");
@@ -70,7 +70,7 @@ public class Database {
         try
 	{
             stmt = conn.createStatement();
-            PreparedStatement pst = conn.prepareStatement("select * from user where login = ? and password = ?");
+            PreparedStatement pst = conn.prepareStatement("select * from User where login = ? and password = ?");
             pst.setString(1, lg);
             pst.setString(2, ps);
             ResultSet rs = pst.executeQuery();
@@ -98,7 +98,7 @@ public class Database {
 	{
 
             stmt = conn.createStatement();
-            PreparedStatement pst = conn.prepareStatement("insert into user(email,first_name,last_name,created_at,login,password,avatar,status) values(?,?,?,strftime('%Y-%m-%d %H:%M:%S','now'),?,?,?,?)");
+            PreparedStatement pst = conn.prepareStatement("insert into User(email,first_name,last_name,created_at,login,password,avatar,status) values(?,?,?,strftime('%Y-%m-%d %H:%M:%S','now'),?,?,?,?)");
             pst.setString(1, usr.getEmail());
             pst.setString(2, usr.getFirstName());
             pst.setString(3, usr.getLastName());
@@ -122,11 +122,12 @@ public class Database {
 	{
 
             stmt = conn.createStatement();
-            PreparedStatement pst = conn.prepareStatement("insert into News(title,content,created_at,user_id,category) values(?,?,strftime('%Y-%m-%d %H:%M:%S','now'),?,?)");
+            PreparedStatement pst = conn.prepareStatement("insert into News(title,content,created_at,user_id,category,image) values(?,?,strftime('%Y-%m-%d %H:%M:%S','now'),?,?,?)");
             pst.setString(1, nw.getTitle());
             pst.setString(2, nw.getContent());
             pst.setInt(3, usr.getId());
             pst.setString(4, nw.getCategory());
+            pst.setString(5, nw.getImage());
             pst.executeUpdate();
             pst.close(); 
             stmt.close(); 
@@ -143,13 +144,14 @@ public class Database {
         try
 	{
             stmt = conn.createStatement();
-            PreparedStatement pst = conn.prepareStatement("select * from News WHERE CATEGORY LIKE '" + type  +"'");
+            PreparedStatement pst = conn.prepareStatement("select * from News WHERE CATEGORY LIKE ?");
+            pst.setString(1,type);
             ResultSet rs = pst.executeQuery();
             
             while(rs.next())
             {   
                 
-                lista.add(new News(rs.getInt(1), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)));
+                lista.add(new News(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)));
             }
             rs.close();
             pst.close();
@@ -176,7 +178,7 @@ public class Database {
             if(rs.next())
             {   
                 
-                object = new News(rs.getInt(1), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                object = new News(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
             }
             rs.close();
             pst.close();

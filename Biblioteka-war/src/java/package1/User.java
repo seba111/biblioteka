@@ -25,7 +25,7 @@ public class User {
         this.email = "";
         this.login = "";
         this.password = ""; 
-        this.avatar = ""; 
+        this.avatar = "empty-avatar.png"; 
         this.status = 0;
         this.id = 0;
     }
@@ -66,6 +66,7 @@ public class User {
         this.login = "";
         this.password = "";
         this.created_at ="";
+        this.avatar = "empty-avatar.png";
         this.status = 0;
         this.id = 0;
     }
