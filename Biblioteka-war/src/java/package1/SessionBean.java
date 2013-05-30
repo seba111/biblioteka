@@ -13,11 +13,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import org.apache.commons.io.FileUtils;
 import org.apache.myfaces.custom.fileupload.UploadedFile;
+import java.util.Random;
 
 /**
  *
@@ -50,13 +54,19 @@ public class SessionBean implements Serializable {
 
                 String relativeWebPath = "/img/";
                 String absoluteDiskPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath(relativeWebPath);//externalContext.getRealPath(relativeWebPath);
-
-             //   File dir = new File("./images/");
-                File file = new File(absoluteDiskPath+"/../../../web/img/"+uploadedFile.getName());
-            //    if(!dir.exists())
-            //    {                 
-            //        dir.mkdirs();
-             //   }
+                //generowanie randomowego stringa
+                char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+                StringBuilder sb = new StringBuilder();
+                Random random = new Random();
+                for (int i = 0; i < 35; i++) {
+                    char c = chars[random.nextInt(chars.length)];
+                    sb.append(c);
+                }
+                String output = sb.toString();
+                
+                // nazwa pliku to randomowy string + rozszerzenie z uploadowanego pliku
+                String filename = output+uploadedFile.getName().substring(uploadedFile.getName().lastIndexOf("."));
+                File file = new File(absoluteDiskPath+"/../../../web/img/"+filename);
                 if(!file.exists())
                 {
                     System.out.println("nie istnieje");
@@ -68,14 +78,12 @@ public class SessionBean implements Serializable {
                 }
 
                 FileUtils.copyInputStreamToFile(inputStr, file);
-
+                this.newNews.setImage(filename);
             } 
             catch (IOException e) {
                 e.printStackTrace();
-            }       
-
-            this.newNews.setImage(uploadedFile.getName());
-            uploadedFile = null;
+            } 
+            this.uploadedFile = null;
         }
         this.db.AddNews(currentUser, newNews);
         System.out.println("Nowy news: "+ newNews);
@@ -86,7 +94,7 @@ public class SessionBean implements Serializable {
         for(News nn: newses){
             System.out.println(nn);
         }
-        return "main";
+        return "glowna";
     }
     public SessionBean() {
         this.currentUser = new User();
@@ -115,17 +123,23 @@ public class SessionBean implements Serializable {
         if(this.uploadedFile != null)
         {
             try {
-                inputStr = this.uploadedFile.getInputStream();       
+                inputStr = uploadedFile.getInputStream();       
 
                 String relativeWebPath = "/img/";
                 String absoluteDiskPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath(relativeWebPath);//externalContext.getRealPath(relativeWebPath);
-
-             //   File dir = new File("./images/");
-                File file = new File(absoluteDiskPath+"/../../../web/img/"+uploadedFile.getName());
-            //    if(!dir.exists())
-            //    {                 
-            //        dir.mkdirs();
-             //   }
+                //generowanie randomowego stringa
+                char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+                StringBuilder sb = new StringBuilder();
+                Random random = new Random();
+                for (int i = 0; i < 35; i++) {
+                    char c = chars[random.nextInt(chars.length)];
+                    sb.append(c);
+                }
+                String output = sb.toString();
+                
+                // nazwa pliku to randomowy string + rozszerzenie z uploadowanego pliku
+                String filename = output+uploadedFile.getName().substring(uploadedFile.getName().lastIndexOf("."));
+                File file = new File(absoluteDiskPath+"/../../../web/img/"+filename);
                 if(!file.exists())
                 {
                     System.out.println("nie istnieje");
@@ -137,20 +151,16 @@ public class SessionBean implements Serializable {
                 }
 
                 FileUtils.copyInputStreamToFile(inputStr, file);
-
+                this.currentUser.setAvatar(filename);
             } 
             catch (IOException e) {
                 e.printStackTrace();
-            }       
-
-            this.currentUser.setAvatar(uploadedFile.getName());
+            }                   
             this.uploadedFile = null;
         }
-        
-
         this.db.AddUser(currentUser);
         this.currentUser.Reset();
-        return "main";
+        return "glowna";
     }
     public String check(){
         User tmp = this.db.CheckLoginData(currentUser.getLogin(), currentUser.getPassword());
@@ -158,17 +168,17 @@ public class SessionBean implements Serializable {
         {
             this.currentUser = tmp;
             this.logged = true;
-            return "main";
+            return "glowna";
         } 
         this.currentUser.Reset();
-        return "main";      
+        return "glowna";      
     }
 
     public String logOut(){
         this.currentUser.Reset();
         this.logged = false;
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "main";
+        return "glowna";
     }
 
     public ArrayList<News> getNewses() {
@@ -186,5 +196,4 @@ public class SessionBean implements Serializable {
     public void setUploadedFile(UploadedFile uploadedFile) {
         this.uploadedFile = uploadedFile;
     }
-
 }
