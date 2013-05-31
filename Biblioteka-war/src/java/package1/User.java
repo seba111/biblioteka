@@ -18,6 +18,7 @@ public class User {
     private String password;
     private String avatar;
     private Integer status;
+    private boolean editable;
 
     public User() {
         this.firstName = "";
@@ -28,6 +29,7 @@ public class User {
         this.avatar = "empty-avatar.png"; 
         this.status = 0;
         this.id = 0;
+        this.editable = false;
     }
     public User(String fn, String ln, String em, String lg, String pw ) {
         this.firstName = fn;
@@ -141,6 +143,14 @@ public class User {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public boolean isEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
     }
     
     @Override

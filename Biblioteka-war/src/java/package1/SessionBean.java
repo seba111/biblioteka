@@ -33,8 +33,17 @@ public class SessionBean implements Serializable {
     private User currentUser;
     private News newNews;
     private ArrayList<News> newses = new ArrayList<News>();
+    private ArrayList<User> users;
     private UploadedFile uploadedFile;
     private Database db;
+
+    public ArrayList<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(ArrayList<User> users) {
+        this.users = users;
+    }
 
     public News getNewNews() {
         return newNews;
@@ -101,6 +110,7 @@ public class SessionBean implements Serializable {
         this.newNews = new News();
         this.logged = false;
         this.db = new Database();
+        this.users = db.GetUsers();
     }
 
     public boolean isLogged() {
@@ -159,6 +169,7 @@ public class SessionBean implements Serializable {
             this.uploadedFile = null;
         }
         this.db.AddUser(currentUser);
+        this.users = db.GetUsers();
         this.currentUser.Reset();
         return "glowna";
     }
@@ -195,5 +206,20 @@ public class SessionBean implements Serializable {
 
     public void setUploadedFile(UploadedFile uploadedFile) {
         this.uploadedFile = uploadedFile;
+    }
+    public void RefreshCurrentUser(){
+        User tmp = db.RefreshUser(this.currentUser.getId());
+        this.currentUser = tmp;
+    }
+        public String editAction(User usr){
+        usr.setEditable(true);
+        return "editUsers";
+    }
+    public String saveAction(User usr){
+        usr.setEditable(false);
+        db.UpdateUser(usr);
+        this.users = db.GetUsers();
+        this.RefreshCurrentUser();
+        return "editUsers";
     }
 }

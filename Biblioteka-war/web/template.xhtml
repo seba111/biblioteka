@@ -25,6 +25,7 @@
                         <li><a data-toggle="modal" href="#myModal" >Zaloguj</a></li>
                     </c:if>
                     <li><h:commandLink value="Zarejestruj" action="register" rendered="#{!SessionBean.logged}"/></li>
+                    <li><h:commandLink value="Zarządzaj użytkownikami" action="editUsers" rendered="#{SessionBean.logged}"/></li>
                     <li><h:commandLink value="Mój profil" action="profile" rendered="#{SessionBean.logged}"/></li>
                     <li><h:commandLink value="Wyloguj" action="#{SessionBean.logOut()}" rendered="#{SessionBean.logged}"/></li>
                 </ul>

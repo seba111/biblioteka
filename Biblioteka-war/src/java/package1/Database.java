@@ -77,10 +77,6 @@ public class Database {
             if(rs.next())
             {
                 usr = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7),rs.getString(8),rs.getInt(9));
-                rs.close();
-                pst.close();
-                stmt.close();
-                return usr;  
             }
             rs.close();
             pst.close();
@@ -91,6 +87,56 @@ public class Database {
             System.err.println(e.getMessage());
 	}
         return usr;
+    }
+    public User RefreshUser(int id)
+    {
+        User usr = null;
+        try
+	{
+            stmt = conn.createStatement();
+            PreparedStatement pst = conn.prepareStatement("select * from User where id= ?");
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            if(rs.next())
+            {
+                usr = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7),rs.getString(8),rs.getInt(9));
+            }
+            rs.close();
+            pst.close();
+            stmt.close();
+	}
+	catch(SQLException e)
+	{
+            System.err.println(e.getMessage());
+	}
+        return usr;
+    }
+    public ArrayList<User> GetUsers()
+    {
+        ArrayList<User> lista= new ArrayList<User>();
+        
+        try
+	{
+            stmt = conn.createStatement();
+            PreparedStatement pst = conn.prepareStatement("select * from User");
+            ResultSet rs = pst.executeQuery();
+            
+            while(rs.next())
+            {   
+                
+                lista.add(new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7),rs.getString(8),rs.getInt(9)));
+            }
+            rs.close();
+            pst.close();
+            stmt.close();
+            
+	}
+	catch(SQLException e)
+	{
+            System.err.println(e.getMessage());
+            
+	}
+        return lista;
     }
     public void AddUser(User usr)
     {
@@ -107,6 +153,28 @@ public class Database {
             pst.setString(5, usr.getPassword());
             pst.setString(6, usr.getAvatar());
             pst.setInt(7, 1);
+            pst.executeUpdate();
+            pst.close(); 
+            stmt.close(); 
+	}
+	catch(SQLException e)
+	{
+            System.err.println(e.getMessage());
+	}       
+    }
+    public void UpdateUser(User usr)
+    {
+        try
+	{
+
+            stmt = conn.createStatement();
+            PreparedStatement pst = conn.prepareStatement("update User set email = ?,first_name = ?,last_name = ?,login = ?,status = ? where id = ?");
+            pst.setString(1, usr.getEmail());
+            pst.setString(2, usr.getFirstName());
+            pst.setString(3, usr.getLastName()); 
+            pst.setString(4, usr.getLogin());
+            pst.setInt(5, usr.getStatus());
+            pst.setInt(6, usr.getId());
             pst.executeUpdate();
             pst.close(); 
             stmt.close(); 

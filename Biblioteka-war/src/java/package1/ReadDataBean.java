@@ -21,7 +21,7 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean(name = "ReadDataBean")
 @ApplicationScoped
 public class ReadDataBean implements Serializable {
-
+    private static final long serialVersionUID = 1L;
     private ArrayList<News> newses;
     private ArrayList<News> events;
     private Database db;
