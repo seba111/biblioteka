@@ -16,7 +16,9 @@ public class User {
     private String created_at;
     private String login;
     private String password;
+    private String avatar;
     private Integer status;
+    private boolean editable;
 
     public User() {
         this.firstName = "";
@@ -24,8 +26,10 @@ public class User {
         this.email = "";
         this.login = "";
         this.password = ""; 
+        this.avatar = "empty-avatar.png"; 
         this.status = 0;
         this.id = 0;
+        this.editable = false;
     }
     public User(String fn, String ln, String em, String lg, String pw ) {
         this.firstName = fn;
@@ -44,7 +48,7 @@ public class User {
         this.status = 0;
         this.id = 0;    
     }
-    public User(Integer id, String email,String first_name, String last_name, String created_at, String login, String password, Integer status) {
+    public User(Integer id, String email,String first_name, String last_name, String created_at, String login, String password, String avatar, Integer status) {
         this.id = id;
         this.email = email;
         this.firstName = first_name;
@@ -53,6 +57,7 @@ public class User {
         this.login = login;
         this.password = password; 
         this.status = status;
+        this.avatar = avatar;
            
     }
     public void Reset()
@@ -63,6 +68,7 @@ public class User {
         this.login = "";
         this.password = "";
         this.created_at ="";
+        this.avatar = "empty-avatar.png";
         this.status = 0;
         this.id = 0;
     }
@@ -130,6 +136,23 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public boolean isEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+    
     @Override
     public String toString(){
         return this.firstName + " "+ this.lastName;

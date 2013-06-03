@@ -10,6 +10,7 @@ package package1;
  */
 public class News {
     private Integer id;
+    private String image;
     private String title;
     private String content;
     private String created_at;
@@ -63,9 +64,19 @@ public class News {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+    
     
     public News(){
         this.id = 0;
+        this.image = "book.jpg";
         this.title = "";
         this.content = "";
         this.created_at = "";
@@ -81,8 +92,18 @@ public class News {
         this.user_id = user_id;
         this.category = category;
     }
+    public News(Integer id,String image, String title, String content, String created_at, String user_id, String category) {
+        this.id = id;
+        this.image = image;
+        this.title = title;
+        this.content = content;
+        this.created_at = created_at;
+        this.user_id = user_id;
+        this.category = category;
+    }
     public void Clear(){
         this.id = 0;
+        this.image = "book.jpg";
         this.title = "";
         this.content = "";
         this.created_at = "";

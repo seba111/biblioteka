@@ -21,7 +21,7 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean(name = "ReadDataBean")
 @ApplicationScoped
 public class ReadDataBean implements Serializable {
-
+    private static final long serialVersionUID = 1L;
     private ArrayList<News> newses;
     private ArrayList<News> events;
     private Database db;
@@ -45,14 +45,6 @@ public class ReadDataBean implements Serializable {
         this.events= db.GetNewses("EVENT");
         return this.events;
     }
-    
-    
-    public Collection<News> GetEvents(){      
-        Database db = new Database();
-        this.events= db.GetNewses("EVENT");
-        return this.events;
-    }
- 
 
     public void setNewses(ArrayList<News> newses) {
         this.newses = newses;
@@ -61,11 +53,4 @@ public class ReadDataBean implements Serializable {
     public void setEvents(ArrayList<News> events) {
         this.events = events;
     }
-
-    public Collection<News> GetNewses(){      
-        Database db = new Database();
-        this.newses= db.GetNewses("NEWS");
-        return this.newses;
-    }
-
 }
