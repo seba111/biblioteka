@@ -135,6 +135,28 @@ public class Database {
             System.err.println(e.getMessage());
 	}       
     }
+    
+    public void AddNewsComment(NewsComment comment){
+        try
+	{
+
+            stmt = conn.createStatement();
+            PreparedStatement pst = conn.prepareStatement("insert into News_Comment(news_id,user_id,created_at,content) values(?,?,strftime('%Y-%m-%d %H:%M:%S','now'),?)");
+            pst.setInt(1, comment.getNews_id());
+            pst.setInt(2, comment.getUser_id());
+            pst.setString(3, comment.getContent());
+            
+            pst.executeUpdate();
+            pst.close(); 
+            stmt.close(); 
+	}
+	catch(SQLException e)
+	{
+            System.err.println(e.getMessage());
+	}   
+    }
+    
+    
     public ArrayList<News> GetNewses(String type)
     {
         ArrayList<News> lista= new ArrayList<News>();

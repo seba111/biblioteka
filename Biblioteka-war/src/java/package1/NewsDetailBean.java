@@ -8,6 +8,8 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.view.facelets.FaceletContext;
 
 /**
  *
@@ -18,10 +20,28 @@ import javax.faces.bean.RequestScoped;
 public class NewsDetailBean implements Serializable {
 
     private News news ;
+    private NewsComment addNews ;
+
+    public NewsComment getAddNews() {
+        return addNews;
+    }
+
+    public void setAddNews(NewsComment addNews) {
+        this.addNews = addNews;
+    }
+    
+    public String addNews(){
+        Database db = new Database();
+        this.addNews.setUser_id(Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("hiddenUserId")));
+        this.addNews.setNews_id(Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("hiddenNewsId")));
+        db.AddNewsComment(this.addNews);
+        return "details";
+    }
+    
     @ManagedProperty("#{param.id}")
     private String id;
     public NewsDetailBean() {
-        
+        addNews = new NewsComment();
     }
     
  

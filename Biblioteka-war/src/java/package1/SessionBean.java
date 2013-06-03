@@ -13,6 +13,8 @@ import javax.ejb.Stateless;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -45,7 +47,7 @@ public class SessionBean implements Serializable {
         for(News nn: newses){
             System.out.println(nn);
         }
-        return "main";
+        return "glowna";
     }
     public SessionBean() {
         this.currentUser = new User();
@@ -54,6 +56,22 @@ public class SessionBean implements Serializable {
     }
 
     public boolean isLogged() {
+        
+        /*try{
+            Cookie loggedCookie = (Cookie) FacesContext.getCurrentInstance().getExternalContext().getRequestCookieMap().get("logged");
+            if(loggedCookie != null){
+                if("activeUser".equals(loggedCookie.getValue())){
+                    logged = true;
+                }
+                else{
+                    logged = false ;
+                }
+            }
+        }
+        catch(Exception e){
+            
+        }*/
+        
         return logged;
     }
 
@@ -81,17 +99,30 @@ public class SessionBean implements Serializable {
         {
             this.currentUser = tmp;
             this.logged = true;
-            return "main";
+            
+            Cookie logCookie = null;
+            
+            try{
+                HttpServletResponse response;
+                response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+                logCookie = new Cookie("logged", "activeUser");
+                response.addCookie(logCookie);
+            }
+            catch(Exception e){
+                
+            }
+            
+            return "glowna";
         } 
         this.currentUser.Reset();
-        return "main";      
+        return "glowna";      
     }
 
     public String logOut(){
         this.currentUser.Reset();
         this.logged = false;
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "main";
+        return "glowna";
     }
 
 }

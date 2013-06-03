@@ -10,8 +10,8 @@
     <ui:define name="content">
         <div class="tabbable tabs-left">
               <ul class="nav nav-tabs">
-                <li ><a href="javascript:void(0)">Nowości</a></li>
-                <li class="active"><a href="javascript:void(0)">Wydarzenia</a></li>
+                <li ><a href="glowna.xhtml">Nowości</a></li>
+                <li ><a href="wydarzenia.xhtml">Wydarzenia</a></li>
               </ul>
               <div class="tab-content">
                   <h3>Szczegóły </h3>
@@ -28,7 +28,7 @@
                               </a>
                                | 
                               <a href="javascript:void(0)">
-                                  Powrót
+                                  Powrót 
                               </a>
                           </p>
                           <div class="clearfix"></div>
@@ -43,8 +43,10 @@
                                               
                                         
                                         <div class="controls">
-                                          <h:inputText  />
-                                          <h:commandButton value="Dodaj komentarz" style="margin-left: 10px" class="btn-success"/>
+                                          <h:inputText value="#{NewsDetailBean.addNews.content}" />
+                                          <input type="hidden" value="#{SessionBean.currentUser.id}" name="hiddenUserId" />
+                                          <input type="hidden" value="#{NewsDetailBean.news.id}" name="hiddenNewsId" />
+                                          <h:commandButton value="Dodaj komentarz" style="margin-left: 10px" class="btn-success" action="#{NewsDetailBean.addNews()}"/>
                                         </div>
                                       </div>
                                   </h:form>
