@@ -18,15 +18,15 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-<<<<<<< HEAD
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-=======
+
 import javax.faces.validator.ValidatorException;
 import org.apache.commons.io.FileUtils;
 import org.apache.myfaces.custom.fileupload.UploadedFile;
 import java.util.Random;
->>>>>>> 3c514389bff7137a8f0a5cad46e417cd2dacb661
+
 
 /**
  *
@@ -200,7 +200,7 @@ public class SessionBean implements Serializable {
         {
             this.currentUser = tmp;
             this.logged = true;
-<<<<<<< HEAD
+
             
             Cookie logCookie = null;
             
@@ -214,8 +214,7 @@ public class SessionBean implements Serializable {
                 
             }
             
-=======
->>>>>>> 3c514389bff7137a8f0a5cad46e417cd2dacb661
+
             return "glowna";
         } 
         this.currentUser.Reset();
@@ -227,13 +226,12 @@ public class SessionBean implements Serializable {
         this.logged = false;
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "glowna";
-<<<<<<< HEAD
-=======
+
     }
 
     public ArrayList<News> getNewses() {
         return newses;
->>>>>>> 3c514389bff7137a8f0a5cad46e417cd2dacb661
+
     }
 
     public void setNewses(ArrayList<News> newses) {
