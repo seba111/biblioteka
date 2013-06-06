@@ -16,6 +16,16 @@ public class News {
     private String created_at;
     private String user_id;
     private String category;
+    private String author;
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+    
 
     public Integer getId() {
         return id;

@@ -218,6 +218,7 @@ public class Database {
             
             pst.executeUpdate();
             pst.close(); 
+            
             stmt.close(); 
 	}
 	catch(SQLException e)
@@ -234,14 +235,45 @@ public class Database {
         try
 	{
             stmt = conn.createStatement();
-            PreparedStatement pst = conn.prepareStatement("select * from News WHERE CATEGORY LIKE ?");
+            PreparedStatement pst = conn.prepareStatement("select a.id , a.image , a.title, a.content, a.created_at, a.user_id, a.category , b.first_name , b.last_name from News a JOIN user b ON a.user_id = b.id WHERE a.CATEGORY LIKE ?");
             pst.setString(1,type);
             ResultSet rs = pst.executeQuery();
             
             while(rs.next())
             {   
+                News object = new News(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                object.setAuthor(rs.getString(8) + " " +rs.getString(9));
+                lista.add(object);
+            }
+            rs.close();
+            pst.close();
+            stmt.close();
+            
+	}
+	catch(SQLException e)
+	{
+            System.err.println(e.getMessage());
+            
+	}
+        return lista;
+    }
+    
+    public ArrayList<NewsComment> GetComments(String news_id)
+    {
+        ArrayList<NewsComment> lista= new ArrayList<NewsComment>();
+        
+        try
+	{
+            stmt = conn.createStatement();
+            PreparedStatement pst = conn.prepareStatement("select * from News_Comment WHERE  news_id = ?");
+            pst.setString(1,news_id);
+            //pst.setString(2,news_id);
+            ResultSet rs = pst.executeQuery();
+            
+            while(rs.next())
+            {   
                 
-                lista.add(new News(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)));
+                lista.add(new NewsComment(rs.getInt(1),rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5)));
             }
             rs.close();
             pst.close();
@@ -262,13 +294,14 @@ public class Database {
         try
 	{
             stmt = conn.createStatement();
-            PreparedStatement pst = conn.prepareStatement("select * from News WHERE ID = " + id  +"");
+            PreparedStatement pst = conn.prepareStatement("select a.id , a.image , a.title, a.content, a.created_at, a.user_id, a.category , b.first_name , b.last_name from News a JOIN user b ON a.user_id = b.id  WHERE a.ID = " + id  +" ");
             ResultSet rs = pst.executeQuery();
             
             if(rs.next())
             {   
                 
                 object = new News(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                object.setAuthor(rs.getString(8) + " " +rs.getString(9));
             }
             rs.close();
             pst.close();
@@ -282,6 +315,8 @@ public class Database {
 	}
         return object;
     }
+    
+    
     public void Close()
     {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();

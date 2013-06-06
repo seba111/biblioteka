@@ -5,9 +5,11 @@
 package package1;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.facelets.FaceletContext;
 
@@ -21,6 +23,17 @@ public class NewsDetailBean implements Serializable {
 
     private News news ;
     private NewsComment addNews ;
+    private ArrayList<NewsComment> comments;
+
+    public ArrayList<NewsComment> getComments() {
+        Database db = new Database();
+        this.comments = db.GetComments(this.id );
+        return this.comments;
+    }
+
+    public void setComments(ArrayList<NewsComment> comments) {
+        this.comments = comments;
+    }
 
     public NewsComment getAddNews() {
         return addNews;

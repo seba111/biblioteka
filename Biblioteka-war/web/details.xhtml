@@ -18,13 +18,14 @@
                   <div class="news-content">
                       <article class="news">
                           <h4><a href="javascript:void(0)">#{NewsDetailBean.news.title}</a> <small>#{NewsDetailBean.news.created_at}</small></h4>
+                          <h5><small>#{NewsDetailBean.news.author}</small></h5>
                           <img src="img/book.jpg" class="img-polaroid" />
                           <p class="news-text">
-                             #{NewsDetailBean.news.content}
+                             #{NewsDetailBean.news.content} 
                           </p>
                           <p class="news-footer">
                               <a href="javascript:void(0)" class="show-comments">
-                                  Pokaż komentarze 
+                                  Pokaż komentarze (#{NewsDetailBean.comments.size()})
                               </a>
                                | 
                               <a href="javascript:void(0)">
@@ -51,37 +52,21 @@
                                       </div>
                                   </h:form>
                               </div>
-                              <div class="media comment">
-                                  <a class="pull-left" href="#">
-                                    <img class="media-object" src="img/goku.png" />
-                                  </a>
-                                  <div class="media-body">
-                                      <h5 class="media-heading"><a href="javascript:void(0)">Jerzy Jurecki</a> <small>26.07.2013 15:37:42</small></h5>                                   
-                                    <div class="media">
-                                      Lorem impus Lorem impus Lorem impus Lorem impus Lorem impus Lorem impus 
-                                    </div>
+                              
+                              <c:forEach var="item" items="#{NewsDetailBean.comments}">
+                                  <div class="media comment">
+                                      <a class="pull-left" href="#">
+                                        <img class="media-object" src="img/goku.png" />
+                                      </a>
+                                      <div class="media-body">
+                                          <h5 class="media-heading"><a href="javascript:void(0)">Jerzy Jurecki</a> <small>26.07.2013 15:37:42</small></h5>                                   
+                                        <div class="media">
+                                          <h:outputText value="#{item.content}"/> 
+                                        </div>
+                                      </div>
                                   </div>
-                              </div><div class="media comment">
-                                  <a class="pull-left" href="#">
-                                    <img class="media-object" src="img/goku.png" />
-                                  </a>
-                                  <div class="media-body">
-                                      <h5 class="media-heading"><a href="javascript:void(0)">Jerzy Jurecki</a> <small>26.07.2013 15:37:42</small></h5>                                   
-                                    <div class="media">
-                                      Lorem impus Lorem impus Lorem impus Lorem impus Lorem impus Lorem impus 
-                                    </div>
-                                  </div>
-                              </div><div class="media comment">
-                                  <a class="pull-left" href="#">
-                                    <img class="media-object" src="img/goku.png" />
-                                  </a>
-                                  <div class="media-body">
-                                      <h5 class="media-heading"><a href="javascript:void(0)">Jerzy Jurecki</a> <small>26.07.2013 15:37:42</small></h5>                                   
-                                    <div class="media">
-                                      Lorem impus Lorem impus Lorem impus Lorem impus Lorem impus Lorem impus 
-                                    </div>
-                                  </div>
-                              </div>
+                              </c:forEach>
+                          
                           </div>
                   </div>
               </div>
