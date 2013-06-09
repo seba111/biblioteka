@@ -25,7 +25,8 @@
                                 <h4><a href="javascript:void(0)"><h:outputText value="#{item.title}"/></a> <small><h:outputText value="#{item.created_at}"/></small></h4>
                                 <h5><small>#{item.author}</small></h5>
                                 <!-- w klasie news dodac usera zeby mozna go bylo tu wyswietlic-->
-                                <h:graphicImage  value="/img/#{item.image}" class="img-polaroid" height="150" width="150"/> 
+                                <h:graphicImage  value="/img/#{item.image}" class="img-polaroid" height="150" width="150" rendered="#{item.image != null}"/> 
+                                <h:graphicImage  value="/img/no-image.png" class="img-polaroid" height="150" width="150" rendered="#{item.image == null}"/> 
                                 <p class="news-text">
                                    <h:outputText value="#{item.content}"/> 
                                 </p>

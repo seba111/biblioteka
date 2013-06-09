@@ -265,7 +265,7 @@ public class Database {
         try
 	{
             stmt = conn.createStatement();
-            PreparedStatement pst = conn.prepareStatement("select * from News_Comment WHERE  news_id = ?");
+            PreparedStatement pst = conn.prepareStatement("select a.id , a.news_id, a.user_id , a.created_at, a.content , b.first_name , b.last_name, b.avatar from News_Comment a JOIN user b ON a.user_id = b.id WHERE  a.news_id = ?");
             pst.setString(1,news_id);
             //pst.setString(2,news_id);
             ResultSet rs = pst.executeQuery();
@@ -273,7 +273,7 @@ public class Database {
             while(rs.next())
             {   
                 
-                lista.add(new NewsComment(rs.getInt(1),rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5)));
+                lista.add(new NewsComment(rs.getInt(1),rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5) , rs.getString(6) + " " + rs.getString(7) , rs.getString(8) ));
             }
             rs.close();
             pst.close();

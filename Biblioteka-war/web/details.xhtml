@@ -19,7 +19,8 @@
                       <article class="news">
                           <h4><a href="javascript:void(0)">#{NewsDetailBean.news.title}</a> <small>#{NewsDetailBean.news.created_at}</small></h4>
                           <h5><small>#{NewsDetailBean.news.author}</small></h5>
-                          <img src="img/book.jpg" class="img-polaroid" />
+                          <h:graphicImage  value="/img/#{NewsDetailBean.news.image}" class="img-polaroid" height="150" width="150" rendered="#{NewsDetailBean.news.image != null}"/> 
+                                <h:graphicImage  value="/img/no-image.png" class="img-polaroid" height="150" width="150" rendered="#{NewsDetailBean.news.image == null}"/> 
                           <p class="news-text">
                              #{NewsDetailBean.news.content} 
                           </p>
@@ -56,10 +57,20 @@
                               <c:forEach var="item" items="#{NewsDetailBean.comments}">
                                   <div class="media comment">
                                       <a class="pull-left" href="#">
-                                        <img class="media-object" src="img/goku.png" />
+                                          
+                                          <c:choose>
+                                                  <c:when test="#{item.avatar != null}">
+                                                        <img class="media-object" src="img/#{item.avatar}" /> 
+                                                  </c:when>
+                                                        
+                                                  <c:otherwise>
+                                                        <img class="media-object" src="img/none-avatar.gif" />
+                                                  </c:otherwise>
+                                           </c:choose>
+                                        
                                       </a>
                                       <div class="media-body">
-                                          <h5 class="media-heading"><a href="javascript:void(0)">Jerzy Jurecki</a> <small>26.07.2013 15:37:42</small></h5>                                   
+                                        <h5 class="media-heading"><a href="javascript:void(0)">#{item.username}</a> <small>#{item.created_at}</small></h5>                                   
                                         <div class="media">
                                           <h:outputText value="#{item.content}"/> 
                                         </div>
