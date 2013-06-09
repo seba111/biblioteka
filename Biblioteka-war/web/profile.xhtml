@@ -15,6 +15,7 @@
           <li class="active"><a href="#tab1" data-toggle="tab">Mój Profil</a></li>
           <li><a href="#tab2" data-toggle="tab">Zarezerwowane książki </a></li>
           <li><a href="#tab3" data-toggle="tab">Dodaj news</a></li>
+          <li><a href="#tab4" data-toggle="tab">Dodaj ksiazke</a></li>
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab1">
@@ -31,8 +32,6 @@
             <p><h:outputText value="#{SessionBean.currentUser.login}" /></p>
             <p><b>Hasło:</b></p>
             <p><h:outputText value="#{SessionBean.currentUser.password}" /></p>          
-            <p><b>(Tymczasowo nazwa pliku z avatarem):</b></p>
-            <p><h:outputText value="#{SessionBean.currentUser.avatar}" /></p>
           </div>
           <div class="tab-pane" id="tab2">
             <p>Coś tu kiedyś będzie.</p>
@@ -53,6 +52,15 @@
                 <h:inputTextarea value="#{SessionBean.newNews.content}"/><br/>
                 <h:commandButton value="Zapisz" class="btn btn-primary" action="#{SessionBean.addNewNews()}"/>
             </h:form>
+          </div>
+          <div class="tab-pane" id="tab4">
+            <p>Podaj tytuł:</p>
+            <h:inputText value="#{AddBookBean.book.title}"/>
+            <p>Podaj autora:</p>
+            <h:inputText value="#{AddBookBean.book.autor}"/>
+            <p>Podaj rok:</p>
+            <h:inputText value="#{AddBookBean.book.year}"/>
+            <h:commandButton value="Zapisz" class="btn btn-primary" action="#{AddBookBean.addBook()}"/>          
           </div>
         </div>
     </div>

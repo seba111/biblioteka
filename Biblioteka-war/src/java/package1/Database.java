@@ -44,11 +44,10 @@ public class Database {
             
             stmt = conn.createStatement();
            // stmt.executeUpdate("drop table user");
-            // tabela user jeszcze stara wersja !
             stmt.executeUpdate("create table if not exists User(id integer primary key autoincrement, email varchar(100), first_name varchar(50), last_name varchar(50), created_at TEXT, login varchar(32), password varchar(32), avatar varchar(36), status integer)");
             stmt.executeUpdate("create table if not exists News(id integer primary key autoincrement, image varchar(36), title varchar(255), content TEXT, created_at TEXT, user_id integer, category varchar(100), FOREIGN KEY(user_id) REFERENCES User(id))");
             stmt.executeUpdate("create table if not exists News_Comment(id integer primary key autoincrement, news_id integer, user_id integer, created_at TEXT, content TEXT, FOREIGN KEY(news_id) REFERENCES News(id), FOREIGN KEY(user_id) REFERENCES User(id))");
-            stmt.executeUpdate("create table if not exists Book(id integer primary key autoincrement, image varchar(36), title varchar(255), desctiption TEXT, yesr TEXT autor varchar(255))");
+            stmt.executeUpdate("create table if not exists Book(id integer primary key autoincrement, image varchar(36), title varchar(255), desctiption TEXT, year integer, autor varchar(255))");
             stmt.executeUpdate("create table if not exists Book_comment(id integer primary key autoincrement, book_id integer, user_id integer, created_at TEXT, content TEXT, FOREIGN KEY(book_id) REFERENCES Book(id), FOREIGN KEY(user_id) REFERENCES User(id))");
             stmt.executeUpdate("create table if not exists Book_grade(id integer primary key autoincrement, book_id integer, user_id integer, value integer, created_at TEXT, FOREIGN KEY(book_id) REFERENCES Book(id), FOREIGN KEY(user_id) REFERENCES User(id))");
             stmt.executeUpdate("create table if not exists Book_status(id integer primary key autoincrement, book_id integer, user_id integer, rent_time TEXT, back_time TEXT, FOREIGN KEY(book_id) REFERENCES Book(id), FOREIGN KEY(user_id) REFERENCES User(id))");
@@ -63,6 +62,53 @@ public class Database {
 	{
             System.err.println(e.getMessage());
 	}
+    }
+    public void AddBook(Book book)
+    {
+        try
+	{
+
+            stmt = conn.createStatement();
+            PreparedStatement pst = conn.prepareStatement("insert into Book(image,title,description,year,autor) values(?,?,?,?,?)");
+            pst.setString(1, book.getImage());
+            pst.setString(2, book.getTitle());
+            pst.setString(3, book.getDescription());           
+            pst.setInt(4, book.getYear());
+            pst.setString(5, book.getAutor());
+            pst.executeUpdate();
+            pst.close(); 
+            stmt.close(); 
+            System.out.println("dodano ksiazke");
+	}
+	catch(SQLException e)
+	{
+            System.err.println(e.getMessage());
+	}       
+    }
+    public ArrayList<Book> GetBooks()
+    {
+        ArrayList<Book> lista= new ArrayList<Book>();       
+        try
+	{
+            stmt = conn.createStatement();
+            PreparedStatement pst = conn.prepareStatement("select * from Book");
+            ResultSet rs = pst.executeQuery();
+            
+            while(rs.next())
+            {           
+               lista.add(new Book(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6)));
+            }
+            rs.close();
+            pst.close();
+            stmt.close();
+            
+	}
+	catch(SQLException e)
+	{
+            System.err.println(e.getMessage());
+            
+	}
+        return lista;
     }
     public User CheckLoginData(String lg, String ps)
     {
