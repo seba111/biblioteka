@@ -18,7 +18,10 @@
                 <p>Podaj autora:</p>
                 <h:inputText value="#{AddBookBean.book.autor}"/>
                 <p>Podaj rok:</p>
-                <h:inputText maxlength="4" value="#{AddBookBean.book.year}"/><br/>
+                <h:inputText maxlength="4" value="#{AddBookBean.book.year}">
+                    <f:validator validatorId="yearValidator" />
+                </h:inputText>  
+                <br/>
                 <h:commandButton value="Zapisz" class="btn btn-primary" action="#{AddBookBean.addBook()}"/>   
             </h:form>
     </ui:define>

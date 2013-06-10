@@ -5,11 +5,11 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:f="http://java.sun.com/jsf/core"
 >
 
     <ui:define name="content">
-        <div class="tabbable tabs-left">
-             
+        <div class="tabbable tabs-left">            
               <div class="tab-content">
                   <h3>Wyszukaj</h3>
                   <h:form enctype="multipart/form-data">                  
@@ -19,7 +19,10 @@
                     <label>Podaj autora:</label>
                     <h:inputText value="#{AddBookBean.book.autor}"/>
                     <label>Podaj rok:</label>
-                    <h:inputText maxlength="4" value="#{AddBookBean.book.year}"/><br/>
+                    <h:inputText maxlength="4" value="#{AddBookBean.book.year}">
+                        <f:validator validatorId="yearValidator" />
+                    </h:inputText>     
+                    <br/>
                     <h:commandButton value="Wyszukaj" class="btn btn-primary" action="#{AddBookBean.searchBooks()}"/>   
                 </h:form>
                  

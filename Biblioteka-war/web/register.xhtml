@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:t="http://myfaces.apache.org/tomahawk">
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Facelet Title</title>
         <link href="css/bootstrap.min.css" rel="stylesheet" media="screen"/>
@@ -15,20 +16,24 @@
                 <h:form enctype="multipart/form-data">
                     <p>Avatar:</p>
                     <t:inputFileUpload value="#{SessionBean.uploadedFile}" />
-                <h:messages />
                   <p>Imię:</p>
-                  <p><h:inputText value="#{SessionBean.currentUser.firstName}" /></p>
+                  <p><h:inputText value="#{SessionBean.currentUser.firstName}" required="true"/></p>
                   <p>Nazwisko:</p>
-                  <p> <h:inputText value="#{SessionBean.currentUser.lastName}" /></p>
+                  <p> <h:inputText value="#{SessionBean.currentUser.lastName}" required="true"/></p>
                   <p>E-mail:</p>
-                  <p><h:inputText value="#{SessionBean.currentUser.email}" /></p>
+                  <p>
+                      <h:inputText value="#{SessionBean.currentUser.email}" required="true">                       
+                          <f:validator validatorId="emailValidator" />
+                      </h:inputText>    
+                  </p>
                   <p>Login:</p>
-                  <p> <h:inputText value="#{SessionBean.currentUser.login}" /></p>
+                  <p> <h:inputText value="#{SessionBean.currentUser.login}" required="true" /></p>
                   <p>Hasło:</p>
-                  <p> <h:inputSecret value="#{SessionBean.currentUser.password}" /></p>
+                  <p> <h:inputSecret value="#{SessionBean.currentUser.password}" required="true"/></p>
                   <h:commandButton value="Rejestruj" class="btn btn-primary" action="#{SessionBean.register()}" />
                   <a></a>
                   <h:commandButton value="Anuluj" class="btn btn-primary" action="main" />
+                  <h:messages />
                 </h:form>
             </div>
         </div>
