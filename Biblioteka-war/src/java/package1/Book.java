@@ -15,8 +15,17 @@ public class Book {
     private String image;
     private String title;
     private String description;
-    private Integer year;
+    private String year;
     private String autor;
+
+    public String getRented() {
+        return rented;
+    }
+
+    public void setRented(String rented) {
+        this.rented = rented;
+    }
+    private String rented ;
     private ArrayList<Book_comment> comments;
     
     public Book(){
@@ -27,6 +36,7 @@ public class Book {
         this.year = null;
         this.autor = null;
         this.comments = null;   
+        this.rented = null;
     }
 
     public Integer getId() {
@@ -61,11 +71,11 @@ public class Book {
         this.description = description;
     }
 
-    public Integer getYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setYear(Integer year) {
+    public void setYear(String year) {
         this.year = year;
     }
 
@@ -85,7 +95,7 @@ public class Book {
         this.comments = comments;
     }
 
-    public Book(Integer id, String image, String title, String description, Integer year, String autor, ArrayList<Book_comment> comments) {
+    public Book(Integer id, String image, String title, String description, String year, String autor, ArrayList<Book_comment> comments) {
         this.id = id;
         this.image = image;
         this.title = title;
@@ -95,13 +105,17 @@ public class Book {
         this.comments = comments;
     }
 
-    public Book(Integer id, String image, String title, String description, Integer year, String autor) {
+    public Book(Integer id, String image, String title, String description, String year, String autor, String rented) {
         this.id = id;
         this.image = image;
         this.title = title;
         this.description = description;
         this.year = year;
         this.autor = autor;
+        this.rented = rented ;
     }
+    
+    
+    
     
 }

@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+>
+
+    <ui:define name="content">
+        <div class="tabbable tabs-left">
+             
+              <div class="tab-content">
+                  <h3>Wynik (#{AddBookBean.books.size()})</h3>                 
+                  <table class="table table-bordered">
+                      <thead>
+                          <tr>
+                              <th>ID</th>
+                              <th>Autor</th>
+                              <th>Tytul</th>
+                              <th>Rok</th>
+                              <th>Status</th>
+                              <th>Akcje</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                       
+                          <c:forEach var="item" items="#{AddBookBean.books}">
+                              <tr >                                  
+                                  <td>#{item.id}</td>
+                                  <td>#{item.autor}</td>
+                                  <td>#{item.title}</td>
+                                  <td>#{item.year}</td>
+                                  <td>
+                                      <h:outputText value="Wypożyczona" rendered="#{item.rented != null}" />
+                                      <h:outputText value="Dostępna" rendered="#{item.rented == null}" />
+                                  </td>
+                                  <td>
+                                      <h:form>
+                                          <input type="hidden" value="#{SessionBean.currentUser.id}" name="hiddenUserId" />
+                                          <input type="hidden" value="#{item.id}" name="hiddenBookId" />
+                                          <h:commandLink action="#{AddBookBean.rent()}" value="Wypożycz" rendered="#{item.rented == null and SessionBean.currentUser.id != 0}" />
+                                      </h:form>
+                                      
+                                  </td>
+                              </tr>
+                          </c:forEach>
+                      </tbody>
+                  </table>
+              </div>
+            </div>
+    </ui:define>
+
+</ui:composition>
+

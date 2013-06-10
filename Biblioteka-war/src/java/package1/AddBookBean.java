@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Random;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -22,15 +23,25 @@ import org.apache.myfaces.custom.fileupload.UploadedFile;
  * @author sebastian
  */
 @ManagedBean(name = "AddBookBean")
-@RequestScoped
+@SessionScoped
 public class AddBookBean implements Serializable{
     
     private static final long serialVersionUID = 1L;
     
     private Book book;
+    private ArrayList<Book> books ;
+
+    public ArrayList<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(ArrayList<Book> books) {
+        this.books = books;
+    }
     private UploadedFile uploadedFile;
     public AddBookBean(){
         book = new Book();
+        books = new ArrayList<Book>();
         uploadedFile = null;
     }
 
@@ -94,6 +105,25 @@ public class AddBookBean implements Serializable{
         
         Database db = new Database();
         db.AddBook(book);
+        db.Close();
         return "glowna";
-    }   
-}
+    }
+    
+    
+    public String searchBooks(){
+        Database db = new Database();
+        this.books = db.GetBooks(this.book);
+        //db.Close();
+        return "searchresult";        
+    }
+    
+    public String rent(){
+        Database db = new Database();
+        int user_id = (Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("hiddenUserId")));
+        int book_id = (Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("hiddenBookId")));
+        db.rentBook(user_id,book_id);
+        this.books = db.GetBooks(book);
+       
+        return "searchresult";
+    }
+ }

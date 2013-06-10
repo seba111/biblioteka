@@ -73,7 +73,7 @@ public class Database {
             pst.setString(1, book.getImage());
             pst.setString(2, book.getTitle());
             pst.setString(3, book.getDescription());           
-            pst.setInt(4, book.getYear());
+            pst.setString(4, book.getYear());
             pst.setString(5, book.getAutor());
             pst.executeUpdate();
             pst.close(); 
@@ -85,31 +85,7 @@ public class Database {
             System.err.println(e.getMessage());
 	}       
     }
-    public ArrayList<Book> GetBooks()
-    {
-        ArrayList<Book> lista= new ArrayList<Book>();       
-        try
-	{
-            stmt = conn.createStatement();
-            PreparedStatement pst = conn.prepareStatement("select * from Book");
-            ResultSet rs = pst.executeQuery();
-            
-            while(rs.next())
-            {           
-               lista.add(new Book(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6)));
-            }
-            rs.close();
-            pst.close();
-            stmt.close();
-            
-	}
-	catch(SQLException e)
-	{
-            System.err.println(e.getMessage());
-            
-	}
-        return lista;
-    }
+    
     public User CheckLoginData(String lg, String ps)
     {
         User usr = null;
@@ -334,6 +310,40 @@ public class Database {
         return lista;
     }
     
+    public ArrayList<Book> GetBooks(Book searchPattern){
+        
+        ArrayList<Book> lista = new ArrayList<Book>();
+        
+        try
+	{
+            stmt = conn.createStatement();
+            PreparedStatement pst = conn.prepareStatement("select a.id,a.image,a.title,a.description,a.year,a.autor, (SELECT b.rent_time FROM Book_status b WHERE b.back_time = '' AND b.book_id = a.id) AS rent_Time FROM Book a WHERE a.year=? OR a.title = ?");
+            //WHERE a.autor LIKE %?% OR a.title LIKE %?% OR a.year = ?
+            //pst.setString(1,searchPattern.getAutor());
+            
+            pst.setString(1, searchPattern.getYear().toString());
+            pst.setString(2,searchPattern.getTitle());
+            ResultSet rs = pst.executeQuery();
+            
+            while(rs.next())
+            {                  
+               lista.add(new Book(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5) , rs.getString(6) ,rs.getString(7)));
+            }
+            rs.close();
+            pst.close();
+            stmt.close();
+            
+	}
+	catch(SQLException e)
+	{
+            System.err.println(e.getMessage());
+            
+	}
+        return lista;
+        
+        //return null;
+    }
+    
     
     public News getNews(String id){
         News object = null;
@@ -368,4 +378,25 @@ public class Database {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
     }
     
+    
+    public void rentBook(int user_id, int book_id){
+        try
+	{
+
+            stmt = conn.createStatement();
+            PreparedStatement pst = conn.prepareStatement("insert into Book_status(book_id,user_id,rent_time,back_time) values(?,?,strftime('%Y-%m-%d %H:%M:%S','now'),'')");
+            pst.setInt(2, user_id);
+            pst.setInt(1, book_id);
+            
+            
+            pst.executeUpdate();
+            pst.close(); 
+           
+            stmt.close(); 
+	}
+	catch(SQLException e)
+	{
+            System.err.println(e.getMessage());
+	}   
+    }
 }
