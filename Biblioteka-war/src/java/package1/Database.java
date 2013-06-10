@@ -53,7 +53,13 @@ public class Database {
             stmt.executeUpdate("create table if not exists Book_status(id integer primary key autoincrement, book_id integer, user_id integer, rent_time TEXT, back_time TEXT, FOREIGN KEY(book_id) REFERENCES Book(id), FOREIGN KEY(user_id) REFERENCES User(id))");
             stmt.executeUpdate("create table if not exists Book_reservation(id integer primary key autoincrement, book_id integer, user_id integer, created_at TEXT, active integer, FOREIGN KEY(book_id) REFERENCES Book(id), FOREIGN KEY(user_id) REFERENCES User(id))");
             
-           // stmt.executeUpdate("insert into user(email,first_name,last_name,created_at,login,password,avatar,status) values('seba.k@vp.pl','Sebastian','Koch',strftime('%Y-%m-%d %H:%M:%S','now'),'seba','seba','brak',1)");
+            ResultSet rs =stmt.executeQuery("select * from User where login='admin1' and password='admin1'");          
+            if(!rs.next())
+            {
+                System.out.println("niema jeszcze admina");
+                stmt.executeUpdate("insert into user(email,first_name,last_name,created_at,login,password,avatar,status) values('seba.k@vp.pl','Head','Admin',strftime('%Y-%m-%d %H:%M:%S','now'),'admin1','admin1','admin.jpg',0)");
+            }
+             
             stmt.close();
             System.out.println("Database constructor");
             
@@ -166,17 +172,25 @@ public class Database {
 	{
 
             stmt = conn.createStatement();
-            PreparedStatement pst = conn.prepareStatement("insert into User(email,first_name,last_name,created_at,login,password,avatar,status) values(?,?,?,strftime('%Y-%m-%d %H:%M:%S','now'),?,?,?,?)");
-            pst.setString(1, usr.getEmail());
-            pst.setString(2, usr.getFirstName());
-            pst.setString(3, usr.getLastName());
-            
-            pst.setString(4, usr.getLogin());
-            pst.setString(5, usr.getPassword());
-            pst.setString(6, usr.getAvatar());
-            pst.setInt(7, 1);
-            pst.executeUpdate();
-            pst.close(); 
+            PreparedStatement pst2 = conn.prepareStatement("select * from User where login=? and password=?");
+            pst2.setString(1, usr.getLogin());
+            pst2.setString(2, usr.getPassword());
+            ResultSet rs = pst2.executeQuery();
+            if(!rs.next())
+            {
+                PreparedStatement pst = conn.prepareStatement("insert into User(email,first_name,last_name,created_at,login,password,avatar,status) values(?,?,?,strftime('%Y-%m-%d %H:%M:%S','now'),?,?,?,?)");
+                pst.setString(1, usr.getEmail());
+                pst.setString(2, usr.getFirstName());
+                pst.setString(3, usr.getLastName());
+
+                pst.setString(4, usr.getLogin());
+                pst.setString(5, usr.getPassword());
+                pst.setString(6, usr.getAvatar());
+                pst.setInt(7, 1);
+                pst.executeUpdate();
+                pst.close();
+            }
+            pst2.close();
             stmt.close(); 
 	}
 	catch(SQLException e)
@@ -317,12 +331,13 @@ public class Database {
         try
 	{
             stmt = conn.createStatement();
-            PreparedStatement pst = conn.prepareStatement("select a.id,a.image,a.title,a.description,a.year,a.autor, (SELECT b.rent_time FROM Book_status b WHERE b.back_time = '' AND b.book_id = a.id) AS rent_Time FROM Book a WHERE a.year=? OR a.title = ?");
+            PreparedStatement pst = conn.prepareStatement("select a.id,a.image,a.title,a.description,a.year,a.autor, (SELECT b.rent_time FROM Book_status b WHERE b.back_time = '' AND b.book_id = a.id) AS rent_Time FROM Book a WHERE a.year=? OR a.title = ? OR a.autor = ?");
             //WHERE a.autor LIKE %?% OR a.title LIKE %?% OR a.year = ?
             //pst.setString(1,searchPattern.getAutor());
             
             pst.setString(1, searchPattern.getYear().toString());
             pst.setString(2,searchPattern.getTitle());
+            pst.setString(3,searchPattern.getAutor());
             ResultSet rs = pst.executeQuery();
             
             while(rs.next())

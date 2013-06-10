@@ -15,7 +15,7 @@
     		headerClass="order-table-header"
     		rowClasses="order-table-odd-row,order-table-even-row">
  
-    	     <h:column> 
+                <h:column> 
                 <f:facet name="header">Imię</f:facet>
                 <h:inputText value="#{usr.firstName}" size="10" rendered="#{usr.editable}" /> 
     		<h:outputText value="#{usr.firstName}" rendered="#{not usr.editable}" /> 
@@ -35,8 +35,12 @@
                 
              <h:column>
     		<f:facet name="header">Status</f:facet>
-                <h:inputText value="#{usr.status}" maxlength="1" size="20" rendered="#{usr.editable}" />
-                <h:outputText value="#{usr.status}" rendered="#{not usr.editable}" />
+                        <h:selectOneMenu value="#{usr.status}" rendered="#{usr.editable}">
+                            <f:selectItem itemValue="1" itemLabel="Użytkownik"/>
+                            <f:selectItem itemValue="0" itemLabel="Admin"/>
+                        </h:selectOneMenu> 
+                        <h:outputText value="Użytkownik" rendered="#{!usr.editable and (usr.status == 1)}" />           
+                        <h:outputText value="Admin" rendered="#{!usr.editable and (usr.status == 0)}" />
     	     </h:column>
                 
  
