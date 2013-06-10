@@ -131,7 +131,8 @@ public class AddBookBean implements Serializable{
             this.uploadedFile = null;
         }
         
-        db.AddBook(book);       
+        db.AddBook(book);
+        book = new Book();
         return "glowna";
     }
     
