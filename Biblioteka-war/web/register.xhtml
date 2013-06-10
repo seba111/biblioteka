@@ -14,7 +14,8 @@
             <p><h3>Rejestracja</h3></p>
             <div class="well">
                 <h:form enctype="multipart/form-data">
-                    <p>Avatar:</p>
+                   <h:messages />
+                   <p>Avatar:</p>
                     <t:inputFileUpload value="#{SessionBean.uploadedFile}" />
                   <p>Imię:</p>
                   <p><h:inputText value="#{SessionBean.currentUser.firstName}" required="true"/></p>
@@ -32,8 +33,9 @@
                   <p> <h:inputSecret value="#{SessionBean.currentUser.password}" required="true"/></p>
                   <h:commandButton value="Rejestruj" class="btn btn-primary" action="#{SessionBean.register()}" />
                   <a></a>
-                  <h:commandButton value="Anuluj" class="btn btn-primary" action="main" />
-                  <h:messages />
+                </h:form>
+                <h:form>
+                    <h:commandButton value="Anuluj" class="btn btn-primary" action="main" />
                 </h:form>
             </div>
         </div>
