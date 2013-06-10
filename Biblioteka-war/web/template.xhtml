@@ -8,16 +8,20 @@
         <title>System Zarządzania biblioteką - Kiebdaj i Koch</title>
         <link href="css/bootstrap.min.css" rel="stylesheet" media="screen"/>
         <link href="css/main.css" rel="stylesheet" media="screen"/>
+        <script type="text/javascript" >
+            window.action = "#{facesContext.getViewRoot().getViewId() }";
+        </script>
     </h:head>
     <h:body>
     <div class="navbar">
+
         <h:form>
           <div class="navbar-inner">
             <a class="brand" href="#">Biblioteka 1.0</a>
             <ul class="nav">
-              <li class="active"><h:commandLink value="Aktualności" action="glowna" /></li>
-              <li><h:commandLink value="O bibliotece" action="about" /></li>
-              <li><h:commandLink value="Katalog" action="catalog" /></li>
+              <li class="active-glowna"><h:commandLink value="Aktualności" action="glowna"  /></li>
+              <li class="active-about"><h:commandLink value="O bibliotece" action="about" /></li>
+              <li class="active-catalog"><h:commandLink value="Katalog" action="catalog" /></li>
             </ul>
             
                 <ul class="nav pull-right"> 
@@ -25,10 +29,10 @@
                         <li><a data-toggle="modal" href="#myModal" >Zaloguj</a></li>
                     </c:if>
                     <li><h:commandLink value="Zarejestruj" action="register" rendered="#{!SessionBean.logged}"/></li>
-                    <li><h:commandLink value="Zarządzaj użytkownikami" action="editUsers" rendered="#{SessionBean.logged and (SessionBean.currentUser.status == 0)}"/></li>
-                    <li><h:commandLink value="Dodaj news" action="addNews" rendered="#{SessionBean.logged and (SessionBean.currentUser.status == 0)}"/></li>
-                    <li><h:commandLink value="Dodaj książkę" action="addBook" rendered="#{SessionBean.logged and (SessionBean.currentUser.status == 0)}"/></li>
-                    <li><h:commandLink value="Mój profil" action="profile" rendered="#{SessionBean.logged}"/></li>
+                    <li class="active-users"><h:commandLink value="Zarządzaj użytkownikami" action="editUsers" rendered="#{SessionBean.logged and (SessionBean.currentUser.status == 0)}"/></li>
+                    <li class="active-news"><h:commandLink value="Dodaj news" action="addNews" rendered="#{SessionBean.logged and (SessionBean.currentUser.status == 0)}"/></li>
+                    <li class="active-addbook"><h:commandLink value="Dodaj książkę" action="addBook" rendered="#{SessionBean.logged and (SessionBean.currentUser.status == 0)}"/></li>
+                    <li class="active-profile"><h:commandLink value="Mój profil" action="profile" rendered="#{SessionBean.logged}"/></li>
                     <li><h:commandLink value="Wyloguj" action="#{SessionBean.logOut()}" rendered="#{SessionBean.logged}"/></li>
                 </ul>
             </div>
