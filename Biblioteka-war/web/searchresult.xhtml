@@ -41,6 +41,10 @@
                                           <input type="hidden" value="#{item.id}" name="hiddenBookId" />
                                           <h:commandLink action="#{AddBookBean.rent()}" value="Wypożycz" rendered="#{item.rented == null and SessionBean.currentUser.id != 0}" />
                                       </h:form>
+                                      <h:form>                                          
+                                          <input type="hidden" value="#{item.id}" name="hiddenBookId" />
+                                          <h:commandLink action="#{AddBookBean.back()}" value="Książka zwrócona" rendered="#{item.rented != null and SessionBean.currentUser.status == 0}" />
+                                      </h:form>
                                       
                                   </td>
                               </tr>

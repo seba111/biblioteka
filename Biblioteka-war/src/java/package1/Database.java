@@ -447,4 +447,24 @@ public class Database {
             System.err.println(e.getMessage());
 	}   
     }
+    
+    public void backBook(int book_id){
+        try
+	{
+
+            stmt = conn.createStatement();
+            PreparedStatement pst = conn.prepareStatement("UPDATE Book_status SET back_time = strftime('%Y-%m-%d %H:%M:%S','now') WHERE book_id = ? AND back_time = ''");
+           
+            pst.setInt(1, book_id);            
+            
+            pst.executeUpdate();
+            pst.close(); 
+           
+            stmt.close(); 
+	}
+	catch(SQLException e)
+	{
+            System.err.println(e.getMessage());
+	}   
+    }
 }

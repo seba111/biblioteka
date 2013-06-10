@@ -139,7 +139,7 @@ public class AddBookBean implements Serializable{
     public String searchBooks(){
         Database db = new Database();
         this.books = db.GetBooks(this.book);
-        //db.Close();
+      
         return "searchresult";        
     }
     
@@ -150,6 +150,15 @@ public class AddBookBean implements Serializable{
         db.rentBook(user_id,book_id);
         this.books = db.GetBooks(book);
          
-        return "searchresult11111";
+        return "searchresult";
+    }
+    
+    public String back(){
+        Database db = new Database();        
+        int book_id = (Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("hiddenBookId")));
+        db.backBook(book_id);
+        this.books = db.GetBooks(book);
+         
+        return "searchresult";
     }
  }
