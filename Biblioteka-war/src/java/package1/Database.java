@@ -359,6 +359,40 @@ public class Database {
         //return null;
     }
     
+    public ArrayList<Book> GetUserBooks(int user_id){
+        
+        ArrayList<Book> lista = new ArrayList<Book>();
+        
+        try
+	{
+            stmt = conn.createStatement();
+            PreparedStatement pst = conn.prepareStatement("select a.id,a.image,a.title,a.description,a.year,a.autor  FROM Book a JOIN Book_status b ON a.id = b.book_id WHERE b.user_id = ?");
+            //WHERE a.autor LIKE %?% OR a.title LIKE %?% OR a.year = ?
+            //pst.setString(1,searchPattern.getAutor());
+            
+            pst.setInt(1, user_id);
+         
+            ResultSet rs = pst.executeQuery();
+            
+            while(rs.next())
+            {                  
+               lista.add(new Book(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5) , rs.getString(6) , ""));
+            }
+            rs.close();
+            pst.close();
+            stmt.close();
+            
+	}
+	catch(SQLException e)
+	{
+            System.err.println(e.getMessage());
+            
+	}
+        return lista;
+        
+        //return null;
+    }
+    
     
     public News getNews(String id){
         News object = null;
