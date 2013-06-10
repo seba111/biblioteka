@@ -435,8 +435,7 @@ public class Database {
             stmt = conn.createStatement();
             PreparedStatement pst = conn.prepareStatement("insert into Book_status(book_id,user_id,rent_time,back_time) values(?,?,strftime('%Y-%m-%d %H:%M:%S','now'),'')");
             pst.setInt(2, user_id);
-            pst.setInt(1, book_id);
-            
+            pst.setInt(1, book_id);            
             
             pst.executeUpdate();
             pst.close(); 

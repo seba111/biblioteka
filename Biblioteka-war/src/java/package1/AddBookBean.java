@@ -24,7 +24,7 @@ import org.apache.myfaces.custom.fileupload.UploadedFile;
  * @author sebastian
  */
 @ManagedBean(name = "AddBookBean")
-@RequestScoped
+@SessionScoped
 public class AddBookBean implements Serializable{
     
     private static final long serialVersionUID = 1L;
@@ -33,6 +33,18 @@ public class AddBookBean implements Serializable{
     private ArrayList<Book> books ;
     private ArrayList<Book> userBooks ;
     private Database db;
+    
+    
+    @ManagedProperty("#{SessionBean}")
+    private SessionBean bean ;
+
+    public SessionBean getBean() {
+        return bean;
+    }
+
+    public void setBean(SessionBean bean) {
+        this.bean = bean;
+    }
 
     public ArrayList<Book> getBooks() {
         return books;
@@ -63,7 +75,8 @@ public class AddBookBean implements Serializable{
 
     public ArrayList<Book> getUserBooks() {
         Database db = new Database();
-        this.userBooks = db.GetUserBooks(1);
+        
+        this.userBooks = db.GetUserBooks(this.bean.getCurrentUser().getId());
         return userBooks;
     }
 
@@ -136,7 +149,7 @@ public class AddBookBean implements Serializable{
         int book_id = (Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("hiddenBookId")));
         db.rentBook(user_id,book_id);
         this.books = db.GetBooks(book);
-       
-        return "searchresult";
+         
+        return "searchresult11111";
     }
  }
