@@ -111,6 +111,7 @@ public class SessionBean implements Serializable {
         return "glowna";
     }
     public SessionBean() {
+        System.out.println("Konstruktor session beana");
         this.currentUser = new User();
         this.newNews = new News();
         this.logged = false;

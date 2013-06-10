@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -23,13 +24,14 @@ import org.apache.myfaces.custom.fileupload.UploadedFile;
  * @author sebastian
  */
 @ManagedBean(name = "AddBookBean")
-@SessionScoped
+@RequestScoped
 public class AddBookBean implements Serializable{
     
     private static final long serialVersionUID = 1L;
     
     private Book book;
     private ArrayList<Book> books ;
+    private Database db;
 
     public ArrayList<Book> getBooks() {
         return books;
@@ -43,6 +45,7 @@ public class AddBookBean implements Serializable{
         book = new Book();
         books = new ArrayList<Book>();
         uploadedFile = null;
+        db = new Database();
     }
 
     public Book getBook() {
@@ -62,7 +65,6 @@ public class AddBookBean implements Serializable{
     }
     
     public String addBook(){
-        
         InputStream inputStr = null;
         if(this.uploadedFile != null)
         {
@@ -103,9 +105,7 @@ public class AddBookBean implements Serializable{
             this.uploadedFile = null;
         }
         
-        Database db = new Database();
-        db.AddBook(book);
-        db.Close();
+        db.AddBook(book);       
         return "glowna";
     }
     
