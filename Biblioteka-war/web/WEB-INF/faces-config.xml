@@ -6,7 +6,13 @@
     xmlns="http://java.sun.com/xml/ns/javaee"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
-
-
+<validator>
+    <validator-id>emailValidator</validator-id>
+    <validator-class>package1.EmailValidator</validator-class>
+</validator>
+<validator>
+    <validator-id>yearValidator</validator-id>
+    <validator-class>package1.YearValidator</validator-class>
+</validator>
 </faces-config>
 
