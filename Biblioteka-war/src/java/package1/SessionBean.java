@@ -53,6 +53,8 @@ public class SessionBean implements Serializable {
     public News getNewNews() {
         return newNews;
     }
+    
+    
 
     public void setNewNews(News newNews) {
         this.newNews = newNews;

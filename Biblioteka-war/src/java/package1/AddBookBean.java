@@ -31,6 +31,7 @@ public class AddBookBean implements Serializable{
     
     private Book book;
     private ArrayList<Book> books ;
+    private ArrayList<Book> userBooks ;
     private Database db;
 
     public ArrayList<Book> getBooks() {
@@ -60,6 +61,18 @@ public class AddBookBean implements Serializable{
         return uploadedFile;
     }
 
+    public ArrayList<Book> getUserBooks() {
+        Database db = new Database();
+        this.userBooks = db.GetUserBooks(1);
+        return userBooks;
+    }
+
+    public void setUserBooks(ArrayList<Book> userBooks) {
+        this.userBooks = userBooks;
+    }
+
+    
+    
     public void setUploadedFile(UploadedFile uploadedFile) {
         this.uploadedFile = uploadedFile;
     }

@@ -32,7 +32,29 @@
             <p><h:outputText value="#{SessionBean.currentUser.password}" /></p>          
           </div>
           <div class="tab-pane" id="tab2">
-            <p>Coś tu kiedyś będzie.</p>
+              <h4>Wypożyczone książki (#{AddBookBean.userBooks.size()})</h4>
+              <table class="table table-bordered">
+                  <thead>
+                      <tr>
+                      <th>ID</th>
+                      <th>Tytuł</th>
+                      <th>Autor</th>
+                      <th>Data wypożyczenia</th>
+                      </tr>
+                  </thead>
+                  <tbody>                      
+                      <c:forEach var="item" items="#{AddBookBean.userBooks}" >
+                          <tr>
+                              <td>#{item.id}</td>
+                              <td>#{item.title}</td>
+                              <td>#{item.autor}</td>
+                              <td>#{item.year}</td>
+                          </tr>
+                      </c:forEach>
+                  </tbody>
+                  
+              </table>
+              
           </div>
         </div>
     </div>
