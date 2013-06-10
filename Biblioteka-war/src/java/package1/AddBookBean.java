@@ -24,7 +24,7 @@ import org.apache.myfaces.custom.fileupload.UploadedFile;
  * @author sebastian
  */
 @ManagedBean(name = "AddBookBean")
-@RequestScoped
+@SessionScoped
 public class AddBookBean implements Serializable{
     
     private static final long serialVersionUID = 1L;
@@ -118,7 +118,8 @@ public class AddBookBean implements Serializable{
             this.uploadedFile = null;
         }
         
-        db.AddBook(book);       
+        db.AddBook(book);
+        book = new Book();
         return "glowna";
     }
     
